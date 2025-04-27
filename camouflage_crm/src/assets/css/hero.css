@@ -1,0 +1,66 @@
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-on-dark);
+  }
+
+  .hero-subtitle {
+    white-space: pre-wrap;
+  }
+  
+  .cta  button{
+    background-color: var(--violet-cta);
+  color: var(--text-on-dark);
+  padding: 0.6rem .7rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.5em 0.2em;
+
+  }
+  
+  
+
+
+  .cta  button:hover {
+  background-color: var(--violet-hover);
+}
+
+.live-chat {
+  margin-top: var(--spacing-xs);
+  background-color: var(--jungle-green);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}

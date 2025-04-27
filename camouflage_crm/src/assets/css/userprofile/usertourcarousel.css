@@ -1,0 +1,58 @@
+.main-carousel-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-top: 0.75em;
+    background: var(--jungle-green);
+    /* background: var(--earth-sand); */
+    border-radius: 0.75rem;
+    align-items: center;
+    box-shadow:
+     5px 5px 20px 5px rgb(0, 0, 0, 0.2), 
+     -5px -5px 20px 5px rgb(0, 0, 0, 0.2), 
+     inset 5px 5px 10px 1px rgb(0, 0, 0, 0.2),
+     inset  -5px -5px 10px 1px rgb(0, 0, 0, 0.2);
+
+  }
+.carousel-wrapper {
+    display: flex;
+    /* gap: 1rem; */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0;
+   
+  }
+  
+  .profile-carousel-card {
+    background: none;
+    width: 2.5rem;
+    flex: 0 0 auto;
+    overflow: hidden;
+    scroll-snap-align: start;
+    box-shadow: none;
+    transition: transform 0.3s ease;
+  }
+  
+ 
+  
+  .profile-carousel-card-img {
+    width: 100%;
+    height: 2.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .tour-name {
+    padding: 0.25rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: var(--text-on-dark);
+    /* color: var(--text-primary); */
+    text-align: center;
+  }
+  .main-carousel-wrapper h4 {
+    color: var(--text-on-dark);
+
+  }

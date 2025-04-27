@@ -1,0 +1,94 @@
+/* colors.css | Camouflage Tours & Travel Brand Color System */
+
+/* ------------------ Dark Theme Colors (default) --------------------------- */
+:root {
+  /* === Base Neutrals === */
+  --white: #ffffff;
+  --off-white: #e7e0d0;
+  --black: #0f0d08;
+
+  /* === Brand Core Colors === */
+  --dark-olive-brown: #2d2812;
+  --accent-tan: #a87b47;
+  --accent-yellow: #e2a845;
+  --light-olive-brown: #2b2413;
+
+  /* === Animal-Inspired Darks === */
+  --deep-brown: #1a140d;
+  --black-paw: #0f0d08;
+
+  /* === Website Greens === */
+  --jungle-green: #365e3e;
+  --lightjungle-green: #2d5c4e;
+  --forest-green: #03140f;
+
+  /* === CTA & Accent Colors === */
+  --violet-cta: #4c3fdc;
+  --violet-hover: #2f28b6;
+
+  /* === Shadows & Elevation === */
+  --shadow-low: rgba(0, 0, 0, 0.1);
+  --shadow-med: rgba(0, 0, 0, 0.2);
+
+  /* === Text Defaults === */
+  --text-on-dark: #ffffff;
+  --text-on-light: #2d2812;
+
+  /* === Accessibility Friendly Contrast Variants === */
+  --accessible-gold: #c68f3c;
+  --accessible-tan: #977145;
+
+  /* === Optional Transparency Variants === */
+  --overlay-dark: rgba(45, 40, 18, 0.85);
+
+  /* === Spacing System === */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* ====== user profile color scheme ============= */
+  --earth-cream: #fefaf2;
+  --earth-sand: #f5eedd;
+  --accent-yellow: #f1c40f;
+  --accent-gold: #d4af37;
+  --text-primary: #2e2e2e;
+  --text-secondary: #777;
+
+}
+
+/* ------------------ Light Theme Colors --------------------------- */
+[data-theme='light'] {
+  --white: #ffffff;
+  --off-white: #f5f5f5;
+  --black: #333333;
+
+  --light-olive-brown: #a6a38d;
+  --warm-tan: #c9a374;
+  --golden-yellow: #e2b944;
+
+  --soft-brown: #6f5d4d;
+  --light-paw: #d4c9b1;
+
+  --light-forest-green: #7e9d7b;
+  --light-jungle-green: #5d7c63;
+
+  --soft-violet-cta: #7c5bd1;
+  --violet-hover: #6a4da0;
+
+  --shadow-low: rgba(0, 0, 0, 0.05);
+  --shadow-med: rgba(0, 0, 0, 0.1);
+
+  --text-on-dark: #333333;
+  --text-on-light: #2d2812;
+
+  --accessible-gold: #b7873c;
+  --accessible-tan: #af8c5e;
+
+  --overlay-light: rgba(255, 255, 255, 0.85);
+}
+
+
+
+

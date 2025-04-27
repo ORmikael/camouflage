@@ -1,0 +1,380 @@
+/* Root container */
+.packages-page {
+  /* padding-top: 4rem; */
+  color: var(--text-on-dark);
+  background-color: var(--background);
+}
+
+/* Hero-style section with blurred background */
+.packages-carousel-section {
+  position: relative;
+  padding: 4rem 1rem 2rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.carousel-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blurred-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(10px) brightness(0.6);
+  transform: scale(1.1);
+}
+
+/* Carousel wrapper */
+.carousel-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  scroll-snap-type: x mandatory;
+}
+/* === Carousel Navigation Arrows === */
+/* .carousel-nav {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  font-size: 1.8rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  z-index: 3;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-nav.left {
+  left: 1rem;
+}
+
+.carousel-nav.right {
+  right: 1rem;
+} */
+
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  scroll-snap-align: center;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Card styles */
+.carousel-card {
+  position: relative;
+  width: 150px;
+  /* min-height: 360px; */
+  background-color: var(--forest-green);
+  color: var(--text-on-dark);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px var(--shadow-low);
+  scroll-snap-align: center;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.card-image {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5));
+}
+
+/* Scaling and depth (manual or JS-controlled) */
+/* .card-0 { transform: scale(0.8) rotateY(-10deg); z-index: 1; }
+.card-1 { transform: scale(0.9) rotateY(-5deg); z-index: 2; }
+.card-2 { transform: scale(1.05); z-index: 3; }
+.card-3 { transform: scale(0.9) rotateY(5deg); z-index: 2; }
+.card-4 { transform: scale(0.8) rotateY(10deg); z-index: 1; } */
+
+.card-info {
+  padding: 1rem;
+}
+
+.card-info h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.card-info .description {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-info .price {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-details-btn,
+.booking-btn {
+  padding: 0.1rem 0.3rem;
+  background-color: transparent;
+  color: var(--accent-yellow);
+  border-radius: 6px;
+  /* font-weight: 800; */
+  text-decoration: none;
+  transition: background-color 0.7s ease;
+  cursor: pointer;
+
+}
+
+.book-now-btn:hover {
+  background-color: var(--violet-hover);
+}
+
+/* Carousel nav buttons (optional to implement) */
+.carousel-nav {
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: var(--white);
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-nav.left { left: 0; }
+.carousel-nav.right { right: 0; }
+
+
+/* =============================================timeline section ==================================== */
+/* timeline header  */
+.timeline-header {
+  background-color: var(--forest-green);
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--accent-yellow);
+}
+
+.timeline-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.discount-tag {
+  font-size: 1.2rem;
+  color: var(--accent-yellow);
+  background-color: var(--ligh-olive-brown);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-left: 1rem;
+}
+
+/* horizontal features row  */
+.tour-features-row {
+  display: flex;
+  gap: 2rem;
+  padding: 1.5rem 4rem;
+  background-color: var(--forest-green);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.feature-icon {
+  font-size: 1rem;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: 6px;
+  background-color: var(--ligh-olive-brown);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tour-timeline {
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  background-color: var(--forest-green);
+}
+
+.timeline-entry {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  gap: 2rem;
+}
+
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  position: relative;
+}
+
+.day-label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--accent-yellow);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-line {
+  width: 1px; /* optional: slightly thicker for visibility */
+  height: 100px;
+  background-color: var(--white);
+  position: absolute;
+  margin: 0 auto; /* optional: center line horizontally */
+  right: 0;
+}
+
+.line-marker {
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-yellow);
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); /* Center + Diamond */
+}
+
+
+.timeline-right {
+  flex: 1;
+  max-width: 600px;
+}
+
+.entry-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+.entry-description {
+  font-size: 1rem;
+  color: #444;
+}
+
+.timeline-image {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* =============================footer section ============================================= */
+/* General Styling for the Footer Section */
+
+/* Latest News Section */
+.footer-section.latest-news {
+  margin-top: 1.5rem;
+}
+
+.footer-section.latest-news h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.footer-section.latest-news ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section.latest-news li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--off-white);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-section.latest-news li:hover {
+  color: var(--accent-yellow);
+}
+
+/* If you want to “offset” the emoji/icon a bit: */
+.footer-section.latest-news li .icon,
+.footer-section.latest-news li span:first-child {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* fitler tags  */
+.footer-section.footer-tags {
+  margin-top: 20px;
+}
+
+.footer-section.footer-tags h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Styling for Each Tag */
+.footer-section.footer-tags .tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: var(--accent-yellow); /* Adjust to match your color palette */
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect for Tags */
+.footer-section.footer-tags .tag:hover {
+  background-color: transparent; /* No background color */
+  border: 1px solid var(--accent-yellow); /* Solid border with accent color */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Deep shadow effect */
+  /* transform: scale(1.); Slight scale on hover */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .footer-section.footer-tags .tag {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}

@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Environment variables and secrets
+.env
+*.env
+
+# Flask-related files
+instance/
+*.sqlite
+*.db
+*.log
+
+# IDE and editor junk
+.vscode/
+.idea/
+
+# MacOS / Windows
+.DS_Store
+Thumbs.db
+
+
+# large folders ( content that will be served from cdn)
+video/

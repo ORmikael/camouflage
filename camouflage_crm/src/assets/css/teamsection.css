@@ -1,0 +1,121 @@
+
+/*======================== Team Section=============================== */
+.about-team {
+  /* margin-top: 2rem; */
+  background-color: var(--forest-green);
+  /* border-radius: 12px; */
+  color: var(--text-on-dark);
+  box-shadow: 0 4px 8px var(--shadow-low);
+  min-height: 300px;
+    padding: 0 2rem 6rem;
+
+/* ============================================================================= */
+}
+.about-team h2 {
+  text-align: center;
+  color: var(--white);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.team-card {
+  background-color: var(--jungle-green);
+  color: var(--white);
+  width: 260px;
+  border-radius: 10px;
+  /* overflow: hidden; */
+  box-shadow: 0 4px 6px var(--shadow-low);
+  transition: transform 0.3s ease;
+  position: relative;
+  margin-top: 10vh; /* Add space for the image overflow */
+  padding-top: 5vh; /* Add space for the image overflow */
+  
+}
+
+.team-card:hover {
+  transform: scale(1.03);
+}
+
+
+.team-card img {
+  width: 7vw;                    /* Responsive width */
+  height: 7vw;                   /* Maintain circular shape */
+  max-width: 120px;              /* Prevent overly large image on big screens */
+  max-height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: -3vw;                    /* Moves image halfway out based on its height */
+  left: 50%;
+  transform: translateX(-50%);   /* Centers the image horizontally */
+}
+
+.member-info {
+  padding: 1.5rem 1rem 1rem;
+  text-align: center;
+}
+
+.member-info h4 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--text-dark); /* Adjust for contrast */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.member-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted); /* Replace with your soft text color variable */
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+
+
+.other-staff-avatars {
+    margin-top: 2rem;
+    text-align: center;
+    border-radius: 50%;
+  }
+  
+  .other-staff-avatars h3 {
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  team
+  
+  .avatar-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* flex-direction: row; */
+    gap: 1rem;
+    
+  }
+  
+  .avatar-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--accent-yellow);
+    box-shadow: 0 2px 6px var(--shadow-low);
+    transition: transform 0.2s ease-in-out;
+    display:inline-block;                /* Prevents inline spacing */
+    background:var(--accent-tan) ;
+    overflow: hidden;
+    margin: 0.5em;
+  }
+  
+  .avatar-img:hover {
+    transform: scale(1.05);
+  }
+  

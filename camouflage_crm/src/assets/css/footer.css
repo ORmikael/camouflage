@@ -1,0 +1,28 @@
+/* Footer */
+.about-footer {
+  /* margin-top: 0.5rem; */
+  padding: 1rem;
+  background-color: var(--forest-green); /* Primary UI background */
+  /* border-radius: 10px; */
+  text-align: center;
+  color: var(--off-white); /* Light neutral text on dark bg */
+}
+
+.social-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+.social-links a {
+  color: var(--white); /* High contrast link color */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.social-links a:hover {
+  text-decoration: underline; /* Optional: you can add color change for hover */
+}

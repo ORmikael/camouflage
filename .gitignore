@@ -1,0 +1,37 @@
+# Node modules (frontend)
+node_modules/
+
+# Dependency lockfiles (optional, keep if needed)
+*.log
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+*.env.local
+
+# Build output
+dist/
+build/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python cache (if any root Python scripts)
+__pycache__/
+*.py[cod]
+
+# Global log/debug/cache
+npm-debug.log*
+pip-log.txt
+coverage/
+
+# large media files 
+media/

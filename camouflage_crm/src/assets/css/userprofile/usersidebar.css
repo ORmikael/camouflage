@@ -1,0 +1,79 @@
+.user-sidebar {
+    width: 20rem;
+    background-color: var(--jungle-green);
+    color: var(--text-on-dark);
+    padding: 1.5rem;
+    /* border-radius: 1rem; */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .profile-box {
+    text-align: center;
+  }
+  
+  .profile-pic {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-gold);
+  }
+  
+  .user-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: var(--text-on-dark);
+  }
+  
+  .user-role {
+    font-size: 0.95rem;
+    color: var(--text-on-dark);
+  }
+  
+  .sidebar-nav  {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar-nav a {
+    all: unset;
+  }
+  
+  .sidebar-nav li {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-on-dark);
+    transition: color 0.3s ease;
+  }
+  
+  .sidebar-nav li:hover {
+    color: var(--accent-yellow);
+  }
+  
+  
+  .user-stats {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .user-stats div {
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-gold);
+  }
+  
+  .stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-on-dark);
+  }
+  

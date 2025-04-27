@@ -1,0 +1,68 @@
+.usr-activity-timeline {
+  padding: 2rem 3rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: 19.5em; /* or any height you prefer */
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--accent-yellow) transparent; /* Firefox */
+}
+
+/* Optional: Scrollbar styling for WebKit browsers */
+.activity-timeline::-webkit-scrollbar {
+  width: 6px;
+}
+.activity-timeline::-webkit-scrollbar-thumb {
+  background-color: var(--accent-yellow);
+  border-radius: 3px;
+}
+.activity-timeline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.timeline-entry {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 2rem;
+}
+
+.u-timeline-line {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background-color: var(--accent-yellow);
+  min-height: 80px;
+}
+
+.line-marker {
+  width: 12px;
+  height: 12px;
+  background-color: var(--accent-yellow);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: 2;
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.activity-desc {
+  font-size: 1rem;
+  color: var(--off-white);
+  margin: 0;
+}
+
+.activity-date {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--accent-yellow);
+}
