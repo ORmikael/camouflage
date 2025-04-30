@@ -1,9 +1,6 @@
 # app.py
-
 import os, smtplib, logging,re
-from user_profile import user_profile_bp
-from admin_profile import admin_profile_bp
-
+from db import get_db  # Import the database connection
 
 
 from bson import ObjectId
@@ -15,7 +12,13 @@ from pymongo import errors
 
 
 
-from db import get_db  # Import the database connection
+# blueprints
+from user_profile import user_profile_bp
+from admin_profile import admin_profile_bp
+from payments import payments_bp 
+from routes.bookings import bookings_bp
+
+
 
 
 
@@ -34,6 +37,9 @@ print("Connected to DB:", db.name)
 # Register blueprints
 app.register_blueprint(user_profile_bp, url_prefix="/api/profile")
 app.register_blueprint(admin_profile_bp)
+app.register_blueprint(payments_bp, url_prefix="/api")
+app.register_blueprint(bookings_bp, url_prefix="/api")
+
 
 
 EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
@@ -78,61 +84,63 @@ def subscribe_newsletter():
 
 # ============================bookings route handler ===============================
 
-# email confirmation 
-def send_confirmation_email(to_email, name, travel_date, package):
-    msg = EmailMessage()
-    msg["Subject"] = "Booking Confirmation - Camouflage Tours"
-    msg["From"] = "noreply@camouflage.com"
-    msg["To"] = to_email
-    msg.set_content(f"""
-    Hi {name},
+# # email confirmation 
+# def send_confirmation_email(to_email, name, travel_date, package):
+#     msg = EmailMessage()
+#     msg["Subject"] = "Booking Confirmation - Camouflage Tours"
+#     msg["From"] = "noreply@camouflage.com"
+#     msg["To"] = to_email
+#     msg.set_content(f"""
+#     Hi {name},
 
-    Your booking for the "{package}" package on {travel_date.strftime('%B %d, %Y')} has been confirmed.
+#     Your booking for the "{package}" package on {travel_date.strftime('%B %d, %Y')} has been confirmed.
 
-    Thank you for choosing Camouflage Tours!
+#     Thank you for choosing Camouflage Tours!
 
-    Regards,
-    Camouflage Team
-    """)
-    try:
-        with smtplib.SMTP('localhost') as smtp:
-            smtp.send_message(msg)
-    except Exception as e:
-        logger.warning(f"Failed to send confirmation email to {to_email}: {e}")
+#     Regards,
+#     Camouflage Team
+#     """)
+#     try:
+#         with smtplib.SMTP('localhost') as smtp:
+#             smtp.send_message(msg)
+#     except Exception as e:
+#         logger.warning(f"Failed to send confirmation email to {to_email}: {e}")
 
 
-@app.route("/api/bookings", methods=["POST"])
-def create_booking():
-    data = request.get_json()
+# @app.route("/api/bookings", methods=["POST"])
+# def create_booking():
+#     data = request.get_json()
 
-    required = ["name", "email", "phone", "travelers", "date", "package"]
-    if not all(field in data and data[field] for field in required):
-        return jsonify({"error": "All required fields must be filled"}), 400
+#     required = ["name", "email", "phone", "travelers", "date", "package"]
+#     if not all(field in data and data[field] for field in required):
+#         return jsonify({"error": "All required fields must be filled"}), 400
 
-    if not re.match(EMAIL_REGEX, data["email"]):
-        return jsonify({"error": "Invalid email format"}), 400
+#     if not re.match(EMAIL_REGEX, data["email"]):
+#         return jsonify({"error": "Invalid email format"}), 400
 
-    try:
-        data["travelers"] = int(data["travelers"])
-        if data["travelers"] < 1:
-            raise ValueError
-    except ValueError:
-        return jsonify({"error": "Travelers must be a positive integer"}), 400
+#     try:
+#         data["travelers"] = int(data["travelers"])
+#         if data["travelers"] < 1:
+#             raise ValueError
+#     except ValueError:
+#         return jsonify({"error": "Travelers must be a positive integer"}), 400
 
-    try:
-        data["date"] = datetime.strptime(data["date"], "%Y-%m-%d")
-    except ValueError:
-        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+#     try:
+#         data["date"] = datetime.strptime(data["date"], "%Y-%m-%d")
+#     except ValueError:
+#         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
 
-    try:
-        booking_collection.insert_one(data)
-        send_confirmation_email(data["email"], data["name"], data["date"], data["package"])
-        return jsonify({"message": "Booking successful. Confirmation email sent."}), 200
-    except errors.DuplicateKeyError:
-        return jsonify({"error": "Booking already exists for this email and date."}), 409
-    except Exception as e:
-        logger.error(f"Booking insert failed: {e}")
-        return jsonify({"error": "Internal server error"}), 500
+#     try:
+#         booking_collection.insert_one(data)
+#         send_confirmation_email(data["email"], data["name"], data["date"], data["package"])
+#         return jsonify({"message": "Booking successful. Confirmation email sent."}), 200
+#     except errors.DuplicateKeyError:
+#         return jsonify({"error": "Booking already exists for this email and date."}), 409
+#     except Exception as e:
+#         logger.error(f"Booking insert failed: {e}")
+#         return jsonify({"error": "Internal server error"}), 500
+    
+
 # highlights route handler
 @app.route('/api/highlights', methods=['GET'])
 def get_all_highlights():
