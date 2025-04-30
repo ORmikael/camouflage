@@ -107,22 +107,7 @@ try {
       <i className="fas fa-globe-africa utility-icon"></i>
     </button>
   </div>
-            {/* const FooterUtilities = () => {
-  return (
-    <div className="footer-utilities">
-      <div className="utility-card"><i className="fas fa-cogs utility-icon"></i> Settings</div>
-      <div className="utility-card"><i className="fas fa-user utility-icon"></i> Account</div>
-      <div className="utility-card"><i className="fas fa-life-ring utility-icon"></i> Support</div>
-      <div className="utility-card"><i className="fas fa-map-marked-alt utility-icon"></i> Travel Maps</div>
-      <div className="utility-card"><i className="fas fa-passport utility-icon"></i> Visa Info</div>
-      <div className="utility-card"><i className="fas fa-hotel utility-icon"></i> Hotels</div>
-      <div className="utility-card"><i className="fas fa-car utility-icon"></i> Car Rentals</div>
-      <div className="utility-card"><i className="fas fa-globe-africa utility-icon"></i> Local Guides</div>
-    </div>
-  );
-};
-
-export default FooterUtilities; */}
+          
 
             <UserTourCarousel highlights={highlightsArray} />
             <div className="recommendation-card">
