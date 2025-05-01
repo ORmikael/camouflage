@@ -1,18 +1,28 @@
-// Packages.js
+// ========================== IMPORTS ==========================
 import React, { useState, useEffect, useRef } from 'react';
 import { baseURL } from '../utils/config';
 import '../assets/css/packages.css';
 import NewsletterSignup from './newsletter';
 import BookingForm from './booking';
+// import packagesHeaderCarousel from './packagesHeaderCarousel'; // (Assuming for future use)
 
+// ========================== MAIN COMPONENT ==========================
 const Packages = () => {
+
+  // ========================== STATE HOOKS ==========================
   const [packages, setPackages] = useState([]);
   const [timelineData, setTimelineData] = useState([]);
   const [showTimeline, setShowTimeline] = useState(false);
   const [error, setError] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
-  const bookingFormRef = useRef();
 
+  // ========================== REFS ==========================
+  const bookingFormRef = useRef();
+  const carouselRef = useRef(null);
+  const sectionRef = useRef(null);
+  const scrollIntervalRef = useRef(null);
+
+  // ========================== FETCH ALL PACKAGES ON MOUNT ==========================
   useEffect(() => {
     const fetchPackages = async () => {
       try {
@@ -26,38 +36,114 @@ const Packages = () => {
     fetchPackages();
   }, []);
 
+  // ========================== HANDLE PACKAGE TIMELINE TOGGLE ==========================
   const handleToggleTimeline = async (pkg) => {
-    if (!showTimeline || selectedPackage?._id !== pkg._id) {
+    const scrollToTimeline = () => {
+      const element = document.getElementById("tour-timeline");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        element.classList.add("focus-effect");
+        setTimeout(() => {
+          element.classList.remove("focus-effect");
+        }, 1200);
+      }
+    };
+
+    const isNewSelection = selectedPackage?._id !== pkg._id;
+
+    if (isNewSelection) {
       try {
         const res = await fetch(`${baseURL}/api/packages/${pkg._id}`);
         const data = await res.json();
         setTimelineData(data.itinerary || []);
         setSelectedPackage(pkg);
         setShowTimeline(true);
+        setTimeout(() => scrollToTimeline(), 100); // Delay ensures section is rendered
       } catch (err) {
-        console.error('Error fetching itinerary:', err);
+        console.error("Error fetching itinerary:", err);
       }
     } else {
-      setShowTimeline(false);
+      setShowTimeline(true);
+      setTimeout(() => scrollToTimeline(), 100);
     }
   };
 
+  // ========================== HANDLE PACKAGE BOOKING SELECTION ==========================
   const handleSelectPackage = (pkg) => {
     setSelectedPackage(pkg);
     bookingFormRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // ========================== AUTO CAROUSEL SCROLLING ==========================
+  const [isHovered, setIsHovered] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+
+  // Track if the carousel section is in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => sectionRef.current && observer.unobserve(sectionRef.current);
+  }, []);
+
+  // Scroll carousel every 10s when in view and not hovered
+  useEffect(() => {
+    const handleCarouselScroll = () => {
+      const track = carouselRef.current;
+      if (!track) return;
+
+      const scrollAmount = track.offsetWidth;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const nextScroll = track.scrollLeft + scrollAmount;
+
+      track.scrollTo({
+        left: nextScroll >= maxScroll ? 0 : nextScroll,
+        behavior: "smooth"
+      });
+    };
+
+    if (isInView && !isHovered && !showTimeline) {
+      scrollIntervalRef.current = setInterval(handleCarouselScroll, 10000);
+    } else {
+      clearInterval(scrollIntervalRef.current);
+    }
+
+    return () => clearInterval(scrollIntervalRef.current);
+  }, [isInView, isHovered, showTimeline]);
+
+  // Manual carousel controls
+  const scrollLeft = () => {
+    carouselRef.current?.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    carouselRef.current?.scrollBy({ left: carouselRef.current.offsetWidth, behavior: "smooth" });
+  };
+
+  // ========================== JSX RETURN ==========================
   return (
     <main className="packages-page">
+
+      {/* === Packages Carousel Section === */}
       <section className="packages-carousel-section">
         <div className="carousel-background">
           <img src="media/images/packageshero.jpg" alt="blurred backdrop" className="blurred-bg" />
         </div>
 
-        <div className="carousel-wrapper">
-          <button className="carousel-nav left">&lt;</button>
-          <div className="carousel-track">
-            {packages.slice(0, 5).map((pkg) => (
+        <div className="carousel-wrapper" ref={sectionRef}>
+          <button className="carousel-nav left" onClick={scrollLeft}>&lt;</button>
+
+          <div
+            className="carousel-track"
+            ref={carouselRef}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {packages.map((pkg) => (
               <article className="carousel-card" key={pkg._id}>
                 <div className="card-image">
                   <img src={`${baseURL}/${pkg.image}`} alt={pkg.name} />
@@ -65,24 +151,34 @@ const Packages = () => {
                 </div>
                 <div className="card-info">
                   <h2>{pkg.name}</h2>
-                  <p className="description">{pkg.description}</p>
+                  <p className="description">@ {pkg.price}</p>
+                  <p className="price">{pkg.description}</p>
                   <button className="booking-btn" onClick={() => handleSelectPackage(pkg)}>Book Now</button>
                   <button className="card-details-btn" onClick={() => handleToggleTimeline(pkg)}>&#8744;</button>
                 </div>
               </article>
             ))}
           </div>
-          <button className="carousel-nav right">&gt;</button>
+
+          <button className="carousel-nav right" onClick={scrollRight}>&gt;</button>
         </div>
       </section>
 
+      {/* === Booking Form Section === */}
+      <div ref={bookingFormRef}>
+        <BookingForm selectedPackage={selectedPackage}  setSelectedPackage={setSelectedPackage}/>
+      </div>
+
+      {/* === Timeline Section === */}
       {showTimeline && selectedPackage && (
-        <section className="tour-timeline">
+        <section className="tour-timeline" id='tour-timeline'>
           <div className="timeline-header">
             <h2 className="timeline-title">
               {selectedPackage.name} <span className="discount-tag">20% OFF</span>
+              <button className="booking-btn" onClick={() => handleSelectPackage(selectedPackage)}>Book Now</button>
             </h2>
           </div>
+
           <div className="tour-features-row">
             <div className="feature-icon"><i className="fas fa-utensils"></i> All meals</div>
             <div className="feature-icon"><i className="fas fa-hotel"></i> Accommodation</div>
@@ -107,10 +203,7 @@ const Packages = () => {
         </section>
       )}
 
-      <div ref={bookingFormRef}>
-        <BookingForm selectedPackage={selectedPackage} />
-      </div>
-
+      {/* === Footer Section === */}
       <section className="about-footer-cta">
         <div className="footer-grid">
           <div className="footer-section latest-news">
@@ -121,13 +214,16 @@ const Packages = () => {
               <li>✈️ How to Plan Efficient Travel</li>
             </ul>
           </div>
+
           <div className="footer-section contact-info">
             <h5>Contact Info</h5>
             <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
             <p><i className="fa-solid fa-envelope"></i> info@camouflagetours.com</p>
-            <p><i className="fa-solid fa-phone"></i> +254-890-0055</p>
+            <p><i className="fa-solid fa-phone"></i> +254-79900-4096</p>
           </div>
+
           <NewsletterSignup />
+
           <div className="footer-section footer-tags">
             <h5>Popular Tags</h5>
             <div className="tag-list">
