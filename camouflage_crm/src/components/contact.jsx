@@ -83,7 +83,7 @@ const Contact = () => {
   <h5>Contact Info</h5>
   <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
   <p><i className="fa-solid fa-envelope"></i> info@camouflagetours.com</p>
-  <p><i className="fa-solid fa-phone"></i> +254-890-0055</p>
+  <p><i className="fa-solid fa-phone"></i> +254-79900-4096</p>
 </div>
 
     
