@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { baseURL } from '../utils/config';
 import '../assets/css/booking.css';
 
-const BookingForm = ({ selectedPackage }) => {
+const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,12 +15,14 @@ const BookingForm = ({ selectedPackage }) => {
   const [status, setStatus] = useState({ success: '', error: '' });
   const bookingSectionRef = useRef(null);
   const packagesSectionRef = useRef(null);
+  const feedbackRef = useRef(null)
 
-  useEffect(() => {
-    if (selectedPackage) {
-      // Optionally, you can prefill or update form data based on selectedPackage
-    }
-  }, [selectedPackage]);
+
+  // useEffect(() => {
+  //   if (selectedPackage) {
+  //     // Optionally, you can prefill or update form data based on selectedPackage
+  //   }
+  // }, [selectedPackage]);
 
   const scrollToRef = (ref) => {
     if (ref.current) {
@@ -48,6 +50,7 @@ const BookingForm = ({ selectedPackage }) => {
 
     if (!selectedPackage) {
       setStatus({ error: 'Please select a package before booking.', success: '' });
+
       scrollToRef(packagesSectionRef);
       return;
     }
@@ -96,18 +99,49 @@ const BookingForm = ({ selectedPackage }) => {
       setStatus({ error: 'An unexpected error occurred.', success: '' });
     }
   };
+  // Scroll to feedback on status change
+useEffect(() => {
+  if ((status.success || status.error) && feedbackRef.current) {
+    feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}, [status]);
+
+// Auto-dismiss feedback after delay
+useEffect(() => {
+  if (status.success || status.error) {
+    const timer = setTimeout(() => {
+      setStatus({ success: '', error: '' });
+    }, 5000);
+    setSelectedPackage(null); 
+
+    return () => clearTimeout(timer);
+  }
+}, [status]);
+
 
   return (
     <>
       <section ref={packagesSectionRef} id="packages-section">
         {/* Packages listing component or content goes here */}
       </section>
+     
+
 
       <section ref={bookingSectionRef} id="booking-form-section">
         <form onSubmit={handleSubmit} className="booking-form">
-          {status.error && <div className="form-error">{status.error}</div>}
-          {status.success && <div className="form-success">{status.success}</div>}
+        <div ref={feedbackRef}>
+  {status.error && <div className="form-error">{status.error}</div>}
+  {status.success && <div className="form-success">{status.success}</div>}
+</div>
 
+          <div class="step-tracker">
+        <div class="step completed">Reserve</div>
+        <div class="step completed">Make Payment</div>
+        <div class="step active">Await Confirmation</div>
+        <div class="step">Enjoy Safari!</div>
+      </div>
+      <hr style={{ margin: '1rem 0px', }} />
+      <div className="form-row">
           <input
             name="name"
             value={formData.name}
@@ -123,6 +157,7 @@ const BookingForm = ({ selectedPackage }) => {
             placeholder="Email Address"
             required
           />
+          
           <input
             name="phone"
             value={formData.phone}
@@ -135,6 +170,8 @@ const BookingForm = ({ selectedPackage }) => {
             type="number"
             value={formData.travelers}
             onChange={handleChange}
+            placeholder="No.Travelers" 
+
             min="1"
             required
           />
@@ -145,12 +182,14 @@ const BookingForm = ({ selectedPackage }) => {
             onChange={handleChange}
             required
           />
-          <textarea
+          </div>
+          
+          {/* <textarea
             name="notes"
             value={formData.notes}
             onChange={handleChange}
             placeholder="Additional Notes"
-          />
+          /> */}
 
           <button type="submit">Confirm Booking</button>
         </form>
