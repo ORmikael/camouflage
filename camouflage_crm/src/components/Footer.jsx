@@ -17,7 +17,7 @@ function Footer() {
   <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></a></li>
 </ul>
 
-      <p>&copy; 2025 Camouflage Tours & Travel. All rights reserved.</p>
+      <p>&copy; 2025 CamoTrail Safaris. All rights reserved.</p>
     </footer>
   );
 }

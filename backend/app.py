@@ -25,6 +25,7 @@ from routes.bookings import bookings_bp
 
 app = Flask(__name__)
 CORS(app)
+application = app
 
 #============= Get the database instance ======================
 
@@ -185,7 +186,7 @@ def get_destinations():
 
     return jsonify(destinations)
 
-# packages route handler
+# packages route handler ( returns all packages in the databse as part of the response)
 @app.route('/api/packages/', methods=['GET'])
 def get_packages():
     packages = []
@@ -201,7 +202,7 @@ def get_packages():
             except Exception:
                 pkg["image"] = None
 
-            # Optional: Remove image_id from response or convert to string
+            #  convert image_id from response to string
             pkg["image_id"] = str(pkg["image_id"])
         else:
             pkg["image"] = None

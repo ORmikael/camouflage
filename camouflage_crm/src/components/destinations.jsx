@@ -58,8 +58,9 @@ const Destinations = () => {
   isVideoMode={false}
   title="Destinations"
   subtitle=" Explore...   Expirience...    Discover hidden gems !"
-  buttons={[]}
-/>      <section className="destinations-list">
+  buttons={[
+    { text: 'Explore Destinations', id: 'explore-destinations-btn' }
+  ]}/>      <section className="destinations-list">
   {error ? (
     <p className="error-message">{error}</p>
   ) : (

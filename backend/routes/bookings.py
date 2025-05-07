@@ -32,7 +32,7 @@ def create_booking():
         required_fields = [
             'name', 'email', 'phone',
             'packageId', 'date', 'endDate', 'travelers',
-            'paymentMethod', 'amount', 'currency'
+             'amount', 'currency'
         ]
         missing = [field for field in required_fields if field not in data]
         if missing:
@@ -53,7 +53,7 @@ def create_booking():
             "date": data['date'],
             "endDate": data['endDate'],
             "travelers": int(data['travelers']),
-            "paymentMethod": data['paymentMethod'],
+            # "paymentMethod": data['paymentMethod'],
             "amount": float(data['amount']),
             "currency": data['currency'],
             "createdAt": datetime.utcnow(),
@@ -67,7 +67,7 @@ def create_booking():
         # Prepare payment payload
         payment_payload = {
             "bookingId": booking_id,
-            "paymentMethod": data['paymentMethod'],
+            # "paymentMethod": data['paymentMethod'],
             "amount": data['amount'],
             "currency": data['currency']
         }

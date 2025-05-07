@@ -2,13 +2,13 @@ from datetime import datetime
 from bson import ObjectId
 from db import get_db
 
-def create_payment_document(booking_id, paymentMethod, amount, currency):
+def create_payment_document(booking_id, amount, currency):
     db = get_db()
     payments = db["payments"]
 
     payment_data = {
         "bookingId": ObjectId(booking_id),
-        "paymentMethod": paymentMethod,
+        # "paymentMethod": "pesapal",
         "status": "Pending",
         "amount": amount,
         "currency": currency,
