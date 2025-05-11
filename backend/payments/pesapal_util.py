@@ -15,6 +15,7 @@ def get_access_token():
         return response.json().get("token")
     except requests.RequestException as e:
         print(f"[Pesapal Auth Error]: {e}")
+        print(f"consumer_key:{ pesapal_config.CONSUMER_KEY},consumer_secret:{ pesapal_config.CONSUMER_SECRET}" )
         return None
 
 def submit_payment_request(payment_id, booking_doc):
@@ -53,43 +54,8 @@ def submit_payment_request(payment_id, booking_doc):
     except requests.RequestException as e:
         return None, str(e)
 
-def get_transaction_status(order_tracking_id):
-    access_token = get_access_token()
-    if not access_token:
-        return None, "Failed to authenticate with Pesapal"
 
-    url = f"{pesapal_config.GET_STATUS_URL}?orderTrackingId={order_tracking_id}"
-
-    try:
-        response = requests.get(
-            url,
-            headers={"Authorization": f"Bearer {access_token}"}
-        )
-        response.raise_for_status()
-        return response.json(), None
-    except requests.RequestException as e:
-        print(f"[Pesapal Status Error]: {e}")
-        return None, str(e)
-
-def get_transaction_details(order_tracking_id):
-    access_token = get_access_token()
-    if not access_token:
-        return None, "Failed to authenticate with Pesapal"
-
-    url = f"{pesapal_config.GET_DETAILS_URL}?orderTrackingId={order_tracking_id}"
-
-    try:
-        response = requests.get(
-            url,
-            headers={"Authorization": f"Bearer {access_token}"}
-        )
-        response.raise_for_status()
-        return response.json(), None
-    except requests.RequestException as e:
-        print(f"[Pesapal Details Error]: {e}")
-        return None, str(e)
-
-# callback function to api.camotrail( backend server) with response from the pesapal gateway
+#  function to register ipn for serve to server communications btwn api.camotrail( backend server) and the pesapal gateway
 def register_ipn_url(url_name="default"):
     access_token = get_access_token()
     if not access_token:
@@ -103,7 +69,7 @@ def register_ipn_url(url_name="default"):
 
     try:
         response = requests.post(
-            f"{pesapal_config.BASE_URL}/v3/api/URLSetup/RegisterIPN",
+            f"{pesapal_config.BASE_URL}api/URLSetup/RegisterIPN",
             headers={
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json"
@@ -114,4 +80,34 @@ def register_ipn_url(url_name="default"):
         return response.json(), None
     except requests.RequestException as e:
         print(f"[Pesapal IPN Registration Error]: {e}")
+        return None, str(e)
+
+
+
+def get_transaction_status(order_tracking_id):
+    access_token = get_access_token()
+    if not access_token:
+        return None, "Failed to authenticate with Pesapal"
+
+    url = f"{pesapal_config.GET_STATUS_URL}?orderTrackingId={order_tracking_id}"
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        status_data = response.json()
+
+        # Optionally handle or log key fields here
+        if status_data.get("status") == "200":
+            return status_data, None
+        else:
+            return None, f"Non-success status in response: {status_data.get('status')}"
+
+    except requests.RequestException as e:
+        print(f"[Pesapal Status Error]: {e}")
         return None, str(e)

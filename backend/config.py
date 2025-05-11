@@ -1,21 +1,32 @@
+
+
+
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
+load_dotenv()  # Load environment variables from .env file
 
-# Base config structure
 class PesapalConfig:
-    FLASK_ENV = os.getenv("PESAPAL_ENV", "development").lower()
-    CONSUMER_KEY = os.getenv("PESAPAL_CONSUMER_KEY")
-    CONSUMER_SECRET = os.getenv("PESAPAL_CONSUMER_SECRET")
-    CALLBACK_URL = os.getenv("PESAPAL_CALLBACK_URL")
-    IPN_URL = os.getenv("PESAPAL_IPN_URL")
-    NOTIFICATION_ID = os.getenv("PESAPAL_NOTIFICATION_ID")
+    ENV = os.getenv("FLASK_ENV", "development").lower()
 
-    BASE_URL = os.getenv("PESAPAL_PROD_URL") if FLASK_ENV == "production" else os.getenv("PESAPAL_DEV_URL")
+    if ENV == "production":
+        CONSUMER_KEY = os.getenv("PROD_PESAPAL_CONSUMER_KEY")
+        CONSUMER_SECRET = os.getenv("PROD_PESAPAL_CONSUMER_SECRET")
+        CALLBACK_URL = os.getenv("PROD_PESAPAL_CALLBACK_URL")
+        IPN_NOTIFICATION_URL = os.getenv("PROD_PESAPAL_IPN_URL")
+        NOTIFICATION_ID = os.getenv("PROD_PESAPAL_NOTIFICATION_ID")
+        BASE_URL = os.getenv("PROD_PESAPAL_URL")
+    else:
+        CONSUMER_KEY = os.getenv("DEV_PESAPAL_CONSUMER_KEY")
+        CONSUMER_SECRET = os.getenv("DEV_PESAPAL_CONSUMER_SECRET")
+        CALLBACK_URL = os.getenv("DEV_PESAPAL_CALLBACK_URL")
+        IPN_URL = os.getenv("DEV_PESAPAL_IPN_URL")
+        NOTIFICATION_ID = os.getenv("DEV_PESAPAL_NOTIFICATION_ID")
+        BASE_URL = os.getenv("DEV_PESAPAL_URL")
 
-    AUTH_URL = f"{BASE_URL}/pesapalv3/api/Auth/RequestToken"
-    SUBMIT_ORDER_URL = f"{BASE_URL}/pesapalv3/api//Transactions/SubmitOrderRequest"
-    GET_STATUS_URL = f"{BASE_URL}/pesapalv3/api/Transactions/GetTransactionStatus"
-    GET_DETAILS_URL = f"{BASE_URL}/pesapalv3/api//Transactions/GetTransactionDetails"
+
+    AUTH_URL = f"{BASE_URL}api/Auth/RequestToken"
+    SUBMIT_ORDER_URL = f"{BASE_URL}api/Transactions/SubmitOrderRequest"
+    GET_STATUS_URL = f"{BASE_URL}api/Transactions/GetTransactionStatus"
+
+ 

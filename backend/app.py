@@ -9,6 +9,8 @@ from flask_cors import CORS
 from datetime import datetime
 from email.message import EmailMessage
 from pymongo import errors
+from payments import pesapal_util as pesapal
+
 
 
 
@@ -38,8 +40,9 @@ print("Connected to DB:", db.name)
 # Register blueprints
 app.register_blueprint(user_profile_bp, url_prefix="/api/profile")
 app.register_blueprint(admin_profile_bp)
-app.register_blueprint(payments_bp, url_prefix="/api")
-app.register_blueprint(bookings_bp, url_prefix="/api")
+app.register_blueprint(payments_bp, url_prefix="/api/payments")
+app.register_blueprint(bookings_bp, url_prefix="/api/book")
+
 
 
 
@@ -52,6 +55,17 @@ booking_collection.create_index([("email", 1), ("date", 1)], unique=True)  # pre
 
 logging.basicConfig(level=logging.INFO)  # Or use logging.ERROR for prod
 logger = logging.getLogger(__name__)
+
+
+
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({"message": "Camotrails Safari backend is running."}), 200
+
+@app.route("/api/booking/status", methods=["GET"])
+def statusCallback():
+    return jsonify({"message": "payment initiated awaiting status update."}), 200
+
 
 # reviews route handler
 @app.route('/api/reviews', methods=['GET'])
@@ -338,7 +352,6 @@ def get_other_staff():
         {'_id': 0}
     )
     return jsonify(list(docs)), 200
-
 
 
 if __name__ == '__main__':

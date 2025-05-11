@@ -13,6 +13,7 @@ const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
   });
 
   const [status, setStatus] = useState({ success: '', error: '' });
+  const [redirect_url, setRedirect_url] = useState('');
   const bookingSectionRef = useRef(null);
   const packagesSectionRef = useRef(null);
   const feedbackRef = useRef(null)
@@ -95,9 +96,17 @@ const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
           notes: '',
         });
       }
+      // Always update redirect_url if present
+      if (result.redirect_url) {
+        setRedirect_url(result.redirect_url);
+      }
+      
+      console.log("Redirect URL:", result.redirect_url);
     } catch (error) {
       setStatus({ error: 'An unexpected error occurred.', success: '' });
     }
+    
+
   };
   // Scroll to feedback on status change
 useEffect(() => {
@@ -106,17 +115,32 @@ useEffect(() => {
   }
 }, [status]);
 
-// Auto-dismiss feedback after delay
+// Auto-dismiss feedback after delay clear selected package from booking doc and ridirect to payment page 
 useEffect(() => {
   if (status.success || status.error) {
     const timer = setTimeout(() => {
       setStatus({ success: '', error: '' });
     }, 5000);
-    setSelectedPackage(null); 
+
+    setSelectedPackage(null);
+
+    // Trigger redirect to payment gateway if status.success includes redirect info
+    try {
+      if (redirect_url) {
+        console.log("Redirecting to payment gateway:", redirect_url);
+        window.location.href = redirect_url;
+      }
+    } catch (err) {
+      console.log(redirect_url);
+      
+      console.warn("No valid redirect_url found in success message.");
+    }
 
     return () => clearTimeout(timer);
   }
 }, [status]);
+
+
 
 
   return (
