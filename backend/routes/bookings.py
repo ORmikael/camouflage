@@ -85,9 +85,9 @@ def create_booking():
             return jsonify({"error": f"Failed to process payment: {str(e)}"}), 502
 
         payment_info = response.json()
-        print(f"payment info received from payment endpoint {payment_info}")
+        print(f"[Booking]: payment info received from payment endpoint {payment_info}")
 
-        payment_id = payment_info.get("paymentId")
+        payment_id = payment_info.get("paymentId") #this id is what should be used for the transactionrefence in the payments doc
         redirect_url = payment_info.get("redirect_url")
 
         if not payment_id:
@@ -98,7 +98,7 @@ def create_booking():
         # ---------------------------------------------------------
         db["bookings"].update_one(
             {"_id": ObjectId(booking_id)},
-            {"$set": {"paymentId": ObjectId(payment_id), "status": "confirmed"}}
+            {"$set": {"paymentId": ObjectId(payment_id), "status": "Being Processed"}}
         )
 
         return jsonify({
@@ -127,7 +127,7 @@ def create_booking():
                 }), 409
             elif status == "pending":
                 return jsonify({
-                    "error": "Booking pending confirmation. Contact support for further guidance."
+                    "error": "Booking already submitted, pending confirmation. Await status message or contact ICT support at support@camotrailsafai.co.ke for further guidance,"
                 }), 409
 
         return jsonify({
@@ -146,10 +146,6 @@ def create_booking():
 # ==============================================================
 
 def update_booking_status(db, booking_id, payment_id, payment_status):
-    """
-    Updates the booking record with the associated payment ID and status.
-    This function is called by the payment updater (from the payment IPN handler).
-    """
     try:
         db["bookings"].update_one(
             {'_id': ObjectId(booking_id)},
@@ -161,3 +157,4 @@ def update_booking_status(db, booking_id, payment_id, payment_status):
         print(f"[Booking Update] Booking {booking_id} updated with status {payment_status}")
     except Exception as e:
         print(f"[Booking Update Error]: {str(e)}")
+

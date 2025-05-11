@@ -46,9 +46,8 @@ def handle_payment():
         transaction_reference=None,                # Will be updated after IPN or status check
         merchant_reference=None,                   # Will be updated after response from Pesapal
         payment_method=None,                       # Will be filled after IPN (e.g., 'MPESA', 'CARD')
-        payment_date=datetime.utcnow(),            # Initial submission time
+        payment_date=datetime.utcnow(),  
         ipn_received=False,                        # Will be updated to True upon IPN reception
-        payment_meta=None,                         # Will hold raw Pesapal response/status details
         updated_at=datetime.utcnow()               # Timestamp for auditing updates
         )
 
@@ -159,20 +158,6 @@ def pesapal_ipn():
         }), 500
 
 # ───────────────────────────────────────────
-# 4. UPDATE PAYMENT & BOOKING DOCS POST-IPN
+# 4. UPDATE PAYMENT & BOOKING 
 # ───────────────────────────────────────────
-def update_payment_post_initiation(db, payment_id, response):
-    try:
-        update_fields = {
-            "merchantReference": response.get("merchant_reference"),
-            "transactionReference": response.get("order_tracking_id"),
-            "paymentMeta": response,  # Optional but useful
-            "updatedAt": response.utcnow()
-        }
-
-        db["payments"].update_one({"_id": payment_id}, {"$set": update_fields})
-        print(f"[Update] Payment {payment_id} updated after initiation")
-
-    except Exception as e:
-        print(f"[Initiation Update Exception]: {str(e)}")
-
+    # handled in the payments view
