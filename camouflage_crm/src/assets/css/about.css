@@ -23,7 +23,7 @@
   grid-template-columns: 1fr 1fr; /* Two equal-width columns */
   gap: 2rem;
   background-color: var(--forest-green);
-  color: var(--text-on-dark);
+  color: var(--white);
   padding: 4rem 8rem;
   box-shadow: 0 4px 8px var(--shadow-low);
   min-height: 300px;
@@ -111,7 +111,7 @@
 
 .mission-vision-values-showcase {
   background-color: var(--forest-green);
-  color: var(--text-on-dark);
+  color: var(--white);
   padding: 3rem 6rem;
   box-shadow: 0 4px 8px var(--shadow-low);
   display: flex;
@@ -267,7 +267,9 @@
 /* ============================== aboutpage footer section ===================================*/
 
 .about-footer-cta {
-  background-color: var(--light-olive-brown); /* Darker contrast section */
+  /* background-color: var(--light-olive-brown); Darker contrast section */
+    background-color: #2d2812 !important;
+
   color: var(--white);
   padding: 3rem 2rem;
   /* margin-top: 4rem; */

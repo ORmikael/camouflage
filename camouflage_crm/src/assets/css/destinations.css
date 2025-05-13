@@ -244,7 +244,7 @@
   position: absolute;
   top: 0;
   font-size: 2rem;
-  color: var(--text-on-dark);
+  color: var(--white);
 }
 
 .destinations-gallery.visible {
@@ -321,7 +321,9 @@
 
 /* ===================================page footer section========================================== */
 .destination-footer-cta {
-  background-color: var(--light-olive-brown); /* Darker contrast section */
+  /* background-color: var(--light-olive-brown); Darker contrast section */
+      background-color: #2d2812 !important;
+
   color: var(--white);
   padding: 3rem 2rem;
   /* margin-top: 4rem; */

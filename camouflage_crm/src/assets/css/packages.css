@@ -1,7 +1,7 @@
 /* Root container */
 .packages-page {
   /* padding-top: 4rem; */
-  color: var(--text-on-dark);
+  color: var(--white);
   background-color: var(--background);
 }
 

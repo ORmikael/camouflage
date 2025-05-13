@@ -40,7 +40,7 @@
 .review-card {
   background-color: var(--dark-green);
   box-sizing: border-box;
-  color: var(--text-on-dark);
+  color: var(--off-white);
   border-radius: 10px;
   border: 3px solid var(--accent-yellow);
   padding: 1.75em 0.5em;

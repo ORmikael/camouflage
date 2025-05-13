@@ -59,11 +59,11 @@
 }
 
 .header.sticky .header__nav a {
-  color: var(--text-on-dark)
+  color: var(--white)
 }
 
 .header__nav a {
-  /* color: white; */
+  color: var(--white);
 }
 
 @media (max-width: 768px) {
@@ -113,7 +113,7 @@
 
   .header__nav a {
     text-decoration: none;
-    color: var(--text-on-dark);
+    color: var(--white);
     font-weight: 500;
   }
   

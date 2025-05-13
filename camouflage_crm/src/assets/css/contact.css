@@ -52,7 +52,7 @@
   text-align: start;
   /* margin-top: 2rem; */
   background-color: var(--forest-green);
-  color: var(--text-on-dark);
+  color: var(--white);
   padding: 4rem 2rem;
   /* border-radius: 12px; */
   height: 70vh;
@@ -194,7 +194,9 @@ textarea {
 }
 /* ============================ foooter section ================================================= */
 .contact-footer-cta {
-  background-color: var(--light-olive-brown); /* Darker contrast section */
+  /* background-color: var(--light-olive-brown); Darker contrast section */
+      background-color: #2d2812 !important;
+
   color: var(--white);
   padding: 3rem 2rem;
   margin-top: 50vh;
