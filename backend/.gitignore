@@ -12,6 +12,10 @@ ENV/
 .env
 *.env
 
+# json configuration files 
+*.json
+
+
 # Flask-related files
 instance/
 *.sqlite

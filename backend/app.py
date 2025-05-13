@@ -9,7 +9,7 @@ from flask_cors import CORS
 from datetime import datetime
 from email.message import EmailMessage
 from pymongo import errors
-from payments import pesapal_util as pesapal
+
 
 
 
@@ -19,6 +19,8 @@ from user_profile import user_profile_bp
 from admin_profile import admin_profile_bp
 from payments import payments_bp 
 from routes.bookings import bookings_bp
+from admin_profile.media_util import media_bp  # import blueprint
+
 
 
 
@@ -42,6 +44,7 @@ app.register_blueprint(user_profile_bp, url_prefix="/api/profile")
 app.register_blueprint(admin_profile_bp)
 app.register_blueprint(payments_bp, url_prefix="/api/payments")
 app.register_blueprint(bookings_bp, url_prefix="/api/book")
+app.register_blueprint(media_bp, url_prefix='/api/media')  # All routes inside will be prefixed
 
 
 
@@ -286,6 +289,74 @@ def get_videos():
                 print(f"Warning: Thumbnail not found for video {filename}")
     print(videos)
     return jsonify(videos)
+
+
+# ===============================
+# FLASK API ROUTE: GET YOUTUBE VIDEOS
+# ===============================
+
+
+# @app.route("/api/videos")
+# def get_youtube_videos():
+#     videos = [
+#         {
+#             "src": "https://www.youtube.com/watch?v=cTF9RzEI5Ao&pp=ygUXc2FtYnVydSBzdXJ2aXZhbCBtb3ZpZXM%3D",
+#             "thumbnail": "/static/thumbnails/video1.jpg",
+#             "title": "Samburu Arrival"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=-bmsacpQipU&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
+#             "thumbnail": "/static/thumbnails/video2.jpg",
+#             "title": "Lake Nakuru Safari"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=Y2EwTrsCD64&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
+#             "thumbnail": "/static/thumbnails/video3.jpg",
+#             "title": "Masai Mara Adventure"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=A_vvxi_7YH0&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
+#             "thumbnail": "/static/thumbnails/video4.jpg",
+#             "title": "Lake Naivasha Boat Ride"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=8OCzT4QBQ6g&pp=ygURYW1ib3NlbGkgd2lsZGxpZmU%3D",
+#             "thumbnail": "/static/thumbnails/video5.jpg",
+#             "title": "Amboseli Wildlife"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=aXrXLsKKJkk&pp=ygUedHNhdm8gd2VzdCBuYXRpb25hbCBwYXJrIGtlbnlh",
+#             "thumbnail": "/static/thumbnails/video6.jpg",
+#             "title": "Tsavo West Landscape"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=e3O9ZXS-9fI&pp=ygUddHNhdm8gZWFzdG5hdGlvbmFsIHBhcmsga2VueWE%3D",
+#             "thumbnail": "/static/thumbnails/video7.jpg",
+#             "title": "Tsavo East Elephants"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=ldhCVp1T94g&pp=ygUSbmFpcm9iaSBjaXR5IHRvdXIg",
+#             "thumbnail": "/static/thumbnails/video8.jpg",
+#             "title": "Nairobi City Tour"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=1TqBQzCuFOk&pp=ygURbGFtdSBpc2xhbmQga2VueWE%3D",
+#             "thumbnail": "/static/thumbnails/video9.jpg",
+#             "title": "Lamu Island Walkthrough"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=gU4Lz6B21xM&pp=ygUOY3VsdHVyYWwgZGFuY2XSBwkJiwkBhyohjO8%3D",
+#             "thumbnail": "/static/thumbnails/video10.jpg",
+#             "title": "Cultural Dance Show"
+#         },
+#         {
+#             "src": "https://www.youtube.com/watch?v=kVT43AYUcl8&pp=ygUOYmFsbG9vbiBzYWZhcmk%3D",
+#             "thumbnail": "/static/thumbnails/video11.jpg",
+#             "title": "Balloon Safari"
+#         }
+#     ]
+#     return jsonify(videos)
+
 
 
 @app.route("/api/videos/<path:filename>", methods=["GET"])
