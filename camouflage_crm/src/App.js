@@ -10,6 +10,7 @@ import ProfilePage from './components/profile';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MediaUploader from './components/media_uploader';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/packages" element={<Packages />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/uploadmedia" element={<MediaUploader />} />
           {/* {console.log(!isProfilePage)} */}
 
     </Routes>

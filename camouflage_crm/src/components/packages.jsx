@@ -218,8 +218,8 @@ const Packages = () => {
           <div className="footer-section contact-info">
             <h5>Contact Info</h5>
             <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
-            <p><i className="fa-solid fa-envelope"></i> info@camouflagetours.com</p>
-            <p><i className="fa-solid fa-phone"></i> +254-79900-4096</p>
+            <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.com</p>
+            <p><i className="fa-solid fa-phone"></i>  +254-73772 1239 | +254-74218 9659 </p>
           </div>
 
           <NewsletterSignup />

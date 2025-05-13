@@ -48,7 +48,7 @@ const About = () => {
           </div>
           <div className="cta-row">
             <a href="/packages" className="cta-button">Book a Tour</a>
-            <span className="call-now">OR +254-79900-4096</span>
+            <span className="call-now">OR +254-73772 1239 | +254-74218 9659</span>
           </div>
         </div>
         <div className="intro-right">
@@ -67,10 +67,10 @@ const About = () => {
         
           <div className="left-column">
               <div className="image-grid">
-              <img src="/media/images/about-destination1.jpg" alt="Destination 1" />
-              <img src="/media/images/about-destination2.jpg" alt="Destination 2" />
-              <img src="/media/images/about-destination2.jpg" alt="Destination 3" />
-              <img src="/media/images/about-destination2.jpg" alt="Destination 4" />
+              <img src="/media/images/destinationhero1.jpg" alt="Destination 1" />
+              <img src="/media/images/destinationhero2.jpg" alt="Destination 2" />
+              <img src="/media/images/destinationhero3.jpg" alt="Destination 3" />
+              <img src="/media/images/destinationhero4.jpg" alt="Destination 4" />
             </div>
           </div>
 
@@ -135,8 +135,8 @@ const About = () => {
 <div className="footer-section contact-info">
   <h5>Contact Info</h5>
   <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
-  <p><i className="fa-solid fa-envelope"></i> info@camouflagetours.com</p>
-  <p><i className="fa-solid fa-phone"></i> +254-79900-4096</p>
+  <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.com</p>
+  <p><i className="fa-solid fa-phone"></i> +254-73772 1239 | +254-74218 9659 </p>
 </div>
       {/* Newsletter Signup */}
     <NewsletterSignup/>

@@ -91,7 +91,7 @@ const openWhatsApp = () => {
           ))}
       {showChat && (
         <div className="live-chat" onClick={openWhatsApp}>
-          Live Chat On WhatsApp
+           Chat On WhatsApp
         </div>
       )}  
             </div>
