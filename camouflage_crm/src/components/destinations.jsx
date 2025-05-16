@@ -4,6 +4,8 @@ import '../assets/css/destinations.css';
 import HeroSection from './hero';
 import NewsletterSignup from './newsletter';
 
+import { useLocation } from 'react-router-dom';
+
 
 
 
@@ -47,6 +49,24 @@ const Destinations = () => {
       return () => clearInterval(interval); // cleanup
     }
   }, [destinations]);
+  
+
+
+ const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollToGallery) {
+      setGalleryVisible(true);
+
+      setTimeout(() => {
+        const el = document.getElementById('destinations-gallery');
+        if (el && typeof el.scrollIntoView === 'function') {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location.state])
+
   
 
   return (
@@ -124,7 +144,7 @@ const Destinations = () => {
     </div> */}
   </div>
 </section>
-<section className={`destinations-gallery ${isGalleryVisible ? 'visible' : ''}`}>
+<section id="destinations-gallery" className={`destinations-gallery ${isGalleryVisible ? 'visible' : ''}`}>
 
   <h2>Curated gems for that perfect getaway </h2>
   {displayedDestinations.map((dest, index) => (

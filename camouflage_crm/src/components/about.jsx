@@ -89,7 +89,7 @@ const About = () => {
                 <h5>Didn’t Find Any Packages?</h5>
                 <div className="cta-row">
                   <span className="call-now">
-                    <i className="fas fa-phone"></i> +254-79900-4096
+                    <i className="fas fa-phone"></i> +254-73112-1239
                   </span>
                   <span className="or-separator">OR</span>
                   <a href="/packages" className="cta-button">More Packages</a>
@@ -135,7 +135,7 @@ const About = () => {
 <div className="footer-section contact-info">
   <h5>Contact Info</h5>
   <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
-  <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.com</p>
+  <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.co.ke</p>
   <p><i className="fa-solid fa-phone"></i> +254-73772 1239 | +254-74218 9659 </p>
 </div>
       {/* Newsletter Signup */}

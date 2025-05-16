@@ -59,7 +59,7 @@ const Header = () => {
           <Link to="/About" onClick={() => setMenuOpen(false)}>About</Link>
           <Link to="/Destinations" onClick={() => setMenuOpen(false)}>Destinations</Link>
           <Link to="/Packages" onClick={() => setMenuOpen(false)}>Packages</Link>
-          <Link to="/Contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link to="/Contact" onClick={() => setMenuOpen(false)}>Contact Us</Link>
         </nav>
 
         {/* Icons */}

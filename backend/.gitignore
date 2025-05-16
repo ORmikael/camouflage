@@ -33,3 +33,4 @@ Thumbs.db
 
 # large folders ( content that will be served from cdn)
 video/
+/backend/static/videos

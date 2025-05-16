@@ -46,13 +46,14 @@ const Contact = () => {
       <div className="company-info">
     <h3>Contact Us</h3>
     <p><i className="fa-solid fa-location-dot"></i> Nairobi, Kenya</p>
-    <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.com</p>
+    <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.co.ke</p>
     <p><i className="fa-solid fa-phone"></i> +254-73772 1239 | +254-74218 9659 </p>
 
     <div className="social-icons">
-      <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-      <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
-      <a href="#"><i className="fa-brands fa-instagram"></i></a>
+      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-facebook-f"></i></a>
+      <a href="https://x.com" target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-x-twitter"></i></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" ><i className="fa-brands fa-instagram"></i></a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></a>
     </div>
   </div>
 </div>
@@ -82,7 +83,7 @@ const Contact = () => {
 <div className="footer-section contact-info">
   <h5>Contact Info</h5>
   <p><i className="fa-solid fa-map-pin"></i> Nairobi, Kenya</p>
-  <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.com</p>
+  <p><i className="fa-solid fa-envelope"></i> info@camotrailsafari.co.ke</p>
   <p><i className="fa-solid fa-phone"></i> +254-73772 1239 | +254-74218 9659  </p>
 </div>
 

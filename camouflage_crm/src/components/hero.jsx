@@ -37,7 +37,13 @@ const HeroSection = ({
       navigate('/packages');
       // Handle booking logic or navigation
     }
+      if (id === 'explore-destinations-btn') {
+      navigate('/destinations', {
+      state: { scrollToGallery: true } })
+
+      }
   };
+  
 
   // destination  hero btn 
   {buttons?.map((btn) => (
@@ -52,7 +58,7 @@ const HeroSection = ({
 
 // handle livechat using whatsApp
 const openWhatsApp = () => {
-  const phoneNumber = '254799004096'; // replace with your number
+  const phoneNumber = '254737721239'; // replace with your number
   const message = 'Hi Camouflage Tours! I have a question.';
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');

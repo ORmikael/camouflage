@@ -54,10 +54,13 @@
   background-color: var(--forest-green);
   color: var(--white);
   padding: 4rem 2rem;
+  /* padding: 6rem 2rem; */
+
   /* border-radius: 12px; */
-  height: 70vh;
+  height: 50vh;
   /* margin-bottom: 100vh; */
 }
+  
 
 .cta-button {
   background-color: var(--violet-cta);
@@ -128,7 +131,9 @@
 
 .social-icons a:hover {
   color: var(--accent-yellow);
+  text-shadow: 0 0 10px  rgba(0, 123, 255, 0.9); /* BLUE HUE SHADOW */
 }
+
 
 .contact-form {
   flex: 2;
@@ -212,10 +217,7 @@ textarea {
     /* border-top: 3px dashed var(--accent-yellow); */
   }
 
-  .contact-cta{
-    padding: 6rem 2rem;
-
-  }
+ */
   .contact-wrapper {
     flex-direction: column;
     padding: 2rem;

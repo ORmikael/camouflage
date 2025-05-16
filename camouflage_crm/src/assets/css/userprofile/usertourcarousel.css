@@ -48,11 +48,11 @@
     padding: 0.25rem;
     font-size: 0.5rem;
     font-weight: bold;
-    color: var(--text-on-dark);
+    color: var(--white);
     /* color: var(--text-primary); */
     text-align: center;
   }
   .main-carousel-wrapper h4 {
-    color: var(--text-on-dark);
+    color: var(--white);
 
   }
