@@ -33,4 +33,39 @@ Thumbs.db
 
 # large folders ( content that will be served from cdn)
 video/
-/backend/static/videos
+backend/static # contains media files that can be ignored and added manually
+
+#  ARCHIVES & COMPRESSED FILES 
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.tar.xz
+*.txz
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+*.lz
+*.lzma
+*.Z
+*.cab
+*.iso
+*.dmg
+*.xz
+*.lz4
+*.zst
+
+
+# === SERVER TEMP FILES ===
+backend/tmp/
+backend/tmp/**
+
+# Optional: Ignore temp/cache/log folders if used
+backend/cache/
+backend/logs/
+backend/.cache/
+backend/.tmp/
