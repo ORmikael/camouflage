@@ -1,10 +1,20 @@
-# db.py
-from pymongo import MongoClient
-import os
 
-# Replace with your MongoDB URI (local or from Atlas)
+# ===============================
+# DATABASE CONNECTION MODULE
+# ===============================
+
+from pymongo import MongoClient
+from config import PesapalConfig
+import os
+import certifi
+os.environ["SSL_CERT_FILE"] = certifi.where()
+
 def get_db():
-    mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
-    client = MongoClient(mongo_uri)
-    db = client["highlights"]
+    # USE RESOLVED CONFIG VALUES
+    mongo_uri = PesapalConfig.MONGO_URI
+    db_name = PesapalConfig.DB_NAME
+
+    client = MongoClient(mongo_uri,tls=True, tlsCAFile=certifi.where())  # Force trusted CA bundle
+    db = client[db_name]
+
     return db

@@ -22,6 +22,8 @@ from routes.bookings import bookings_bp
 from admin_profile.media_util import media_bp  # import blueprint
 
 
+import certifi
+print("[CERTIFI] Using CA bundle at:", certifi.where())
 
 
 

@@ -18,6 +18,7 @@ class PesapalConfig:
         BASE_URL = os.getenv("PROD_PESAPAL_URL")
         MEDIA_BASE_URL = os.getenv("PROD_MEDIA_BASE_URL")
         MONGO_URI = os.getenv('PROD_MONGO_URI')
+        DB_NAME = os.getenv('PROD_DB_NAME')
 
     else:
         CONSUMER_KEY = os.getenv("DEV_PESAPAL_CONSUMER_KEY")
@@ -28,6 +29,8 @@ class PesapalConfig:
         BASE_URL = os.getenv("DEV_PESAPAL_URL")
         MEDIA_BASE_URL = os.getenv("DEV_MEDIA_BASE_URL")
         MONGO_URI =os.getenv('DEV_MONGO_URI')
+        DB_NAME = os.getenv('DEV_DB_NAME')
+
 
 
     AUTH_URL = f"{BASE_URL}api/Auth/RequestToken"

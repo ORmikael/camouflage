@@ -21,6 +21,8 @@ import sys
 
 import mimetypes
 import os
+import certifi
+os.environ["SSL_CERT_FILE"] = certifi.where()
 
 # ===============================
 # ENV SETUP & SERVICE INIT
@@ -41,8 +43,9 @@ if not PesapalConfig.GOOGLE_CREDENTIALS_PATH or not os.path.exists(PesapalConfig
 credentials = service_account.Credentials.from_service_account_file(PesapalConfig.GOOGLE_CREDENTIALS_PATH)
 drive_service = build('drive', 'v3', credentials=credentials)
 
-client = MongoClient(PesapalConfig.MONGO_URI)
-db = client.get_default_database()
+client = MongoClient(PesapalConfig.MONGO_URI,tls=True, tlsCAFile=certifi.where())  # Force trusted CA bundle
+db = client[PesapalConfig.DB_NAME]
+    
 media_collection = db.media
 
 # ===============================
