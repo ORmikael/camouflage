@@ -4,6 +4,8 @@ from bson import ObjectId, errors as bson_errors
 from datetime import datetime
 import requests
 from pymongo.errors import DuplicateKeyError
+from flask_jwt_extended import get_jwt, jwt_required, get_jwt_identity
+from pymongo import DESCENDING
 
 from db import get_db
 
@@ -14,7 +16,7 @@ db = get_db()
 # 🟩 ROUTE: CREATE A NEW BOOKING AND INITIALIZE PAYMENT
 # ==============================================================
 
-@bookings_bp.route('', methods=['POST'])
+@bookings_bp.route('/book', methods=['POST'])
 def create_booking():
     data = request.get_json()
 
@@ -141,6 +143,108 @@ def create_booking():
         print(f"[Booking API Error]: {e}")
         return jsonify({'error': 'Internal server error. Contact support.'}), 500
 
+
+
+# ===============================
+# ROUTE: GET USER BOOKINGS
+# ===============================
+
+
+@bookings_bp.route("/bookings/user", methods=["GET"])
+@jwt_required()
+def get_user_bookings():
+    print("[ROUTE HIT] /bookings/user")  # ✅ This MUST show in your Flask logs
+    try:
+       # ===============================
+        # [JWT] GET USER IDENTITY PAYLOAD
+        # ===============================
+        user_id = get_jwt_identity()  # ✅ Now a string (user_id)
+
+        if not user_id:
+            return jsonify({"status": "fail", "message": "Missing user_id in token"}), 401
+
+        # ===============================
+        # [DB] LOOKUP USER EMAIL FROM USERS COLLECTION
+        # ===============================
+        users_collection = db["users"]
+        user = users_collection.find_one({"_id": ObjectId(user_id)})
+
+        if not user:
+            return jsonify({
+                "status": "fail",
+                "message": "User not found"
+            }), 404
+
+        email = user.get("email")
+        print("[BOOKING]  Resolved email from user_id:", email)
+
+        # ===============================
+        # [DB] FETCH BOOKINGS BY EMAIL
+        # ===============================
+        packages_collection = db["packages"]
+        bookings_collection = db["bookings"]
+        # try:
+        #    all_docs = bookings_collection.find()
+        #    for i, doc in enumerate(all_docs, start=1):
+        #     doc["_id"] = str(doc["_id"])  # Convert ObjectId for readable output
+        #     print(f"[BOOKING DOC {i}] {doc}")
+        # except Exception as e:
+        #      print("[DB DEBUG ERROR]", str(e))
+
+        user_bookings = list(
+            bookings_collection.find({"email": email}).sort("date", DESCENDING)
+        )
+
+        sanitized_bookings = []
+
+        for i, booking in enumerate(user_bookings):
+            clean_doc = sanitize_doc(booking)
+            # ===============================
+            # LOOKUP: PACKAGE NAME
+            # ===============================
+            package_id = booking.get("packageId")
+            if isinstance(package_id, ObjectId):  # Defensive check
+                package = packages_collection.find_one({"_id": package_id})
+                if package:
+                    clean_doc["trip_name"] = package.get("name", "Unknown Package")
+                else:
+                    clean_doc["trip_name"] = "Package Not Found"
+            else:
+                clean_doc["trip_name"] = "Invalid Package ID"
+            print(f"[DB] Booking #{i+1}:", clean_doc)
+            sanitized_bookings.append(clean_doc)
+
+        print(f"[DB] {len(sanitized_bookings)} bookings found for {email}")
+
+        return jsonify({
+            "status": "success",
+            "message": "Bookings retrieved",
+            "bookings": sanitized_bookings
+        }), 200
+
+    except Exception as e:
+        print("[BOOKINGS ERROR]", str(e))
+        return jsonify({
+            "status": "error",
+            "message": "Server error"
+        }), 500
+
+
+
+# helper functions 
+
+
+def sanitize_doc(doc):
+    sanitized = {}
+    for key, value in doc.items():
+        if isinstance(value, ObjectId):
+            sanitized[key] = str(value)
+        elif isinstance(value, datetime):
+            sanitized[key] = value.isoformat()
+        else:
+            sanitized[key] = value
+    return sanitized
+
 # ==============================================================
 # 🔁 UTILITY FUNCTION: UPDATE BOOKING STATUS
 # ==============================================================
@@ -157,4 +261,3 @@ def update_booking_status(db, booking_id, payment_id, payment_status):
         print(f"[Booking Update] Booking {booking_id} updated with status {payment_status}")
     except Exception as e:
         print(f"[Booking Update Error]: {str(e)}")
-
