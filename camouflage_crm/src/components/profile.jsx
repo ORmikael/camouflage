@@ -11,17 +11,23 @@ import UserSidebar from './userProfilecomponets/UserSidebar';
 import UserTourCarousel from './userProfilecomponets/UserTourCarousel';
 import UserActivityTimeline from './userProfilecomponets/UserActivityTimeline';
 import LoadingMessage from './errorloadingpage';
+import MyBookings from './userProfilecomponets/mybookings';
+import { useLocation } from 'react-router-dom';
 
 const ProfilePage = () => {
+    const location = useLocation();
 
   const [userData, setUserData] = useState(null);
+  const activeSection = location.hash === "#bookings";
+
   
 
 
 
    useEffect(() => {
     const testFetch = async () => {
-      const userId = '680c656c89ad9cc4da0485fd'
+      const user = JSON.parse(localStorage.getItem("user"))
+      const userId = user?.userId
       try {
         console.log('baseURL:', baseURL);
         const res = await fetch(`${baseURL}/api/profile/usr?user_id=${userId}`);
@@ -70,46 +76,48 @@ try {
         <section className="profile-hero">
           <div className="hero-ooverlay">
             
-            <h1>Welcome back, Michael</h1>
+            <h1>Welcome back, {userData.name?.split(" ")[0]}</h1>
             <Link to="/destinations"><button className="cta-button">Explore Destinations</button></Link>
           </div>
         </section>
         <div className="profile-section-wrapper">
 
         <section className="tour-carousel">
-
-          <div className="recommendation-section">
+           {activeSection ? (
+          <MyBookings />
+        ) :(<div className="recommendation-section">
           
+                      {/* utility buttons for user profile */}
+            <div className="usr-utilities">
+              {/* <button className="utility-button" title="Settings">
+                <i className="fas fa-cogs utility-icon"></i>
+              </button> */}
+              <button className="utility-button" title="Account">
+                <i className="fas fa-user utility-icon"></i>
+              </button>
+              <button className="utility-button" title="Support">
+                <i className="fas fa-life-ring utility-icon"></i>
+              </button>
+              {/* <button className="utility-button" title="Travel Maps">
+                <i className="fas fa-map-marked-alt utility-icon"></i>
+              </button> */}
+              {/* <button className="utility-button" title="Visa Info">
+                <i className="fas fa-passport utility-icon"></i>
+              </button> */}
+              <button className="utility-button" title="Accomodation">
+                <i className="fas fa-hotel utility-icon"></i>
+              </button>
+              {/* <button className="utility-button" title="Car Rentals">
+                <i className="fas fa-car utility-icon"></i>
+              </button> */}
+              {/* <button className="utility-button" title="Local Guides">
+                <i className="fas fa-globe-africa utility-icon"></i>
+              </button> */}
+            </div>
             
-<div className="usr-utilities">
-    <button className="utility-button" title="Settings">
-      <i className="fas fa-cogs utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Account">
-      <i className="fas fa-user utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Support">
-      <i className="fas fa-life-ring utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Travel Maps">
-      <i className="fas fa-map-marked-alt utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Visa Info">
-      <i className="fas fa-passport utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Hotels">
-      <i className="fas fa-hotel utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Car Rentals">
-      <i className="fas fa-car utility-icon"></i>
-    </button>
-    <button className="utility-button" title="Local Guides">
-      <i className="fas fa-globe-africa utility-icon"></i>
-    </button>
-  </div>
-          
+            
+            <UserTourCarousel highlights={highlightsArray} />  {/* main carousel wrapper */}
 
-            <UserTourCarousel highlights={highlightsArray} />
             <div className="recommendation-card">
               <img
                 src="/media/images/mountain.jpeg" // Use same image from hero
@@ -123,7 +131,9 @@ try {
               </div>
               
             </div>
-          </div>
+          </div> )}
+
+          
         </section>
 
         <section className="activity-section"  >

@@ -1,10 +1,11 @@
 import React from 'react';
 import "../../assets/css/userprofile/usersidebar.css";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserSidebar = ({ userData }) => {
-  
+  const navigate = useNavigate()
 
   return (
     <aside className="user-sidebar">
@@ -38,10 +39,16 @@ const UserSidebar = ({ userData }) => {
 
 
 <ul className="sidebar-nav">
-  <li><Link to="/bookings">My Bookings</Link></li>
-  <li><Link to="/saved">Saved Destinations</Link></li>
-  <li><Link to="/highlights">Travel Highlights</Link></li>
-  <li><Link to="/blog">Blog</Link></li>
+  <li>
+          <button onClick={() => navigate("/profile#bookings")}>
+            My Bookings
+          </button>
+        </li>  {/* <li><button onClick={() => navigate("/profile#bookings")}>My Bookings</button></li> */}
+
+
+  {/* <li><Link to="/saved">Saved Destinations</Link></li> */}
+  {/* <li><Link to="/highlights">Travel Highlights</Link></li> */}
+  {/* <li><Link to="/blog">Blog</Link></li> */}
   <li><Link to="/archive">Archive</Link></li>
   <li><Link to="/">Back To Home</Link></li>
 </ul>
