@@ -42,7 +42,9 @@
   .sidebar-nav a {
     all: unset;
   }
-  
+  .sidebar-nav button {
+    all: unset;
+  }
   .sidebar-nav li {
     margin-bottom: 1rem;
     font-weight: 500;

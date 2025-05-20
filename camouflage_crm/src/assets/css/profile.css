@@ -88,7 +88,8 @@
 .recommendation-section {
   /* margin-top: 0.75rem; */
   /* width: 60%; */
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
 
 
   } 
