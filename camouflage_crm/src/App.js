@@ -48,7 +48,6 @@ function App() {
 
           {/* Normal User Route */}
           <Route path="/profile" element={ <ProtectedRoute allowedRoles={["user", "staff", "management"]}><ProfilePage /></ProtectedRoute>}/>
-          <Route path="/bookings" element={<ProtectedRoute allowedRoles={["user", "staff", "management"]}><MyBookings /></ProtectedRoute>} /> 
 
           {/* administrative routes  */}
           <Route path="/staff" element={<ProtectedRoute allowedRoles={["staff", "management"]}><StaffDashboard /></ProtectedRoute>}/>
