@@ -9,7 +9,7 @@ from flask_cors import CORS
 from datetime import datetime
 from email.message import EmailMessage
 from pymongo import errors
-
+from flask_jwt_extended import JWTManager
 
 
 
@@ -20,6 +20,7 @@ from admin_profile import admin_profile_bp
 from payments import payments_bp 
 from routes.bookings import bookings_bp
 from admin_profile.media_util import media_bp  # import blueprint
+from authentication.auth import auth_bp
 
 
 import certifi
@@ -32,6 +33,9 @@ print("[CERTIFI] Using CA bundle at:", certifi.where())
 app = Flask(__name__)
 CORS(app)
 application = app
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Replace with env var in prod
+
+jwt = JWTManager(app)  # ✅ Must be here
 
 #============= Get the database instance ======================
 
@@ -42,10 +46,11 @@ print("Connected to DB:", db.name)
 
 
 # Register blueprints
+app.register_blueprint(auth_bp, url_prefix="/api")
 app.register_blueprint(user_profile_bp, url_prefix="/api/profile")
-app.register_blueprint(admin_profile_bp)
+# app.register_blueprint(admin_profile_bp)
 app.register_blueprint(payments_bp, url_prefix="/api/payments")
-app.register_blueprint(bookings_bp, url_prefix="/api/book")
+app.register_blueprint(bookings_bp, url_prefix="/api")
 app.register_blueprint(media_bp, url_prefix='/api/media')  # All routes inside will be prefixed
 
 
