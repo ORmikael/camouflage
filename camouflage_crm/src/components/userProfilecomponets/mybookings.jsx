@@ -3,11 +3,13 @@
 // ===============================
 import { useEffect, useState } from "react";
 import { baseURL } from "../../utils/config";
+import { useNavigate } from "react-router-dom";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate()
 
   // ===============================
   // FETCH BOOKINGS
@@ -46,8 +48,8 @@ const MyBookings = () => {
   // ===============================
   const handleCancel = async (bookingId) => {
     try {
-      const res = await fetch(`${baseURL}/api/bookings/cancel${bookingId}`, {
-        method: "DELETE",
+      const res = await fetch(`${baseURL}/api/bookings/cancel/${bookingId}`, {
+        method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -65,6 +67,21 @@ const MyBookings = () => {
       console.error("[CANCEL]", err);
     }
   };
+
+  // ===============================
+  // BOOK AGAIN ACTION
+  // ===============================
+  const handleBookAgain = (booking) => {
+    if (!booking) {
+      console.error("[BOOK AGAIN] Info for rebooking is missing:", booking);
+      return;
+    }
+    localStorage.setItem("rebookData", JSON.stringify(booking));
+
+    // Redirect to booking form page (replace with actual path)
+    navigate(`/packages`);
+  };
+
 
   // ===============================
   // HELPERS
@@ -116,7 +133,9 @@ const MyBookings = () => {
               <p><strong>Status:</strong> {booking.status}</p>
 
               <button
-                onClick={() => console.log("[BOOK AGAIN]", booking)}
+                // onClick={() => console.log("[BOOK AGAIN]", booking)}
+                  onClick={() => handleBookAgain(booking)}
+
                 className="mt-2 px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600"
               >
                 Book Again
