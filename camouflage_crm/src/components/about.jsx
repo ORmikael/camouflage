@@ -29,7 +29,7 @@ const About = () => {
         <div className="intro-left">
           <h2>Safaris & Tours Begin With Us!!</h2>
           <p>
-            Camouflage Tours & Travel is an East African tour company passionate about
+            CamoTrails Safaris is an East African tour company passionate about
             crafting unforgettable experiences for international tourists, corporate,
             and group travelers. We create immersive safaris, beach getaways, and
             cultural adventures, combining comfort, authenticity, and local expertise.
