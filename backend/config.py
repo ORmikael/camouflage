@@ -8,6 +8,7 @@ load_dotenv()  # Load environment variables from .env file
 
 class PesapalConfig:
     ENV = os.getenv("FLASK_ENV", "development").lower()
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     if ENV == "production":
         CONSUMER_KEY = os.getenv("PROD_PESAPAL_CONSUMER_KEY")
