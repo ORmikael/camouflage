@@ -6,11 +6,19 @@ import requests
 from pymongo.errors import DuplicateKeyError
 from flask_jwt_extended import get_jwt, jwt_required, get_jwt_identity
 from pymongo import DESCENDING
+from functools import wraps
+import jwt
+from flask import current_app
+
+
 
 from db import get_db
 
 bookings_bp = Blueprint('bookings', __name__)
 db = get_db()
+
+packages_collection = db["packages"]
+bookings_collection = db["bookings"]
 
 # ==============================================================
 # 🟩 ROUTE: CREATE A NEW BOOKING AND INITIALIZE PAYMENT
@@ -150,15 +158,22 @@ def create_booking():
 # ===============================
 
 
-@bookings_bp.route("/bookings/user", methods=["GET"])
+@bookings_bp.route("/bookings/user", methods=["GET"]) #fetches all the bookings for a particular user 
 @jwt_required()
 def get_user_bookings():
-    print("[ROUTE HIT] /bookings/user")  # ✅ This MUST show in your Flask logs
+    jwt_payload = get_jwt()
+    role = jwt_payload.get("role")
+    email = jwt_payload.get("email")
+    user_id = get_jwt_identity()  # ✅ Now a string (user_id)
+
+    print(f"[BOOKINGS] User ID: {user_id} | Role: {role} | Email: {email}", file=sys.stderr)
+
     try:
        # ===============================
         # [JWT] GET USER IDENTITY PAYLOAD
         # ===============================
-        user_id = get_jwt_identity()  # ✅ Now a string (user_id)
+        
+
 
         if not user_id:
             return jsonify({"status": "fail", "message": "Missing user_id in token"}), 401
@@ -181,8 +196,7 @@ def get_user_bookings():
         # ===============================
         # [DB] FETCH BOOKINGS BY EMAIL
         # ===============================
-        packages_collection = db["packages"]
-        bookings_collection = db["bookings"]
+       
         # try:
         #    all_docs = bookings_collection.find()
         #    for i, doc in enumerate(all_docs, start=1):
@@ -228,6 +242,111 @@ def get_user_bookings():
             "status": "error",
             "message": "Server error"
         }), 500
+
+# ===============================
+# CANCEL BOOKING ENDPOINT
+# ===============================
+
+
+# AUTH WRAPPER
+def token_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        print("[AUTH] Checking Authorization header...", file=sys.stderr)
+        token = request.headers.get("Authorization")
+
+        if token and token.startswith("Bearer "):
+            token = token.split(" ")[1]
+            print(f"[AUTH] Extracted token: {token}", file=sys.stderr)
+        else:
+            print("[AUTH] Token missing or malformed", file=sys.stderr)
+            return jsonify({"status": "fail", "message": "Token missing"}), 401
+
+        try:
+            print("[AUTH] Decoding token...", file=sys.stderr)
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
+            print(f"[AUTH] Token decoded: {data}", file=sys.stderr)
+
+            user_id = data.get('sub')
+            if not user_id:
+                print("[AUTH] 'id' field missing in token payload", file=sys.stderr)
+                return jsonify({"status": "fail", "message": "'id' not found in token"}), 401
+
+            user_email = data.get("email")
+            if not user_email:
+                print("[AUTH] 'email' field missing in token payload", file=sys.stderr)
+                return jsonify({"status": "fail", "message": "'email' not found in token"}), 401
+            
+        except jwt.ExpiredSignatureError:
+            print("[AUTH] Token has expired", file=sys.stderr)
+            return jsonify({"status": "fail", "message": "Token expired"}), 401
+        except jwt.InvalidTokenError as e:
+            print(f"[AUTH] Invalid token: {e}", file=sys.stderr)
+            return jsonify({"status": "fail", "message": "Invalid token"}), 401
+        except Exception as e:
+            print(f"[AUTH] Unknown error during token decode: {e}", file=sys.stderr)
+            return jsonify({"status": "fail", "message": "Token decode error"}), 401
+
+        print(f"[AUTH] Authenticated user ID: {user_id} EMAIL: {user_email}" , file=sys.stderr)
+        return f( *args,user_id=user_id, user_email=user_email, **kwargs)
+    return wrapper
+
+# ===============================
+# CANCEL BOOKING ROUTE (PATCH)
+# ===============================
+@bookings_bp.route('/bookings/cancel/<string:booking_id>', methods=['PATCH'])
+@token_required
+def cancel_booking(booking_id, user_email, user_id):
+    try:
+        print(f"[CANCEL_BOOKING] Request received to cancel booking: {booking_id} by user: {user_id}")
+
+        # FETCH BOOKING
+        booking = bookings_collection.find_one({"_id": ObjectId(booking_id)})
+        print(f"[DB] Booking fetched: {booking}")
+
+        if not booking:
+            print("[CANCEL_BOOKING] Booking not found")
+            return jsonify({"status": "fail", "message": "Booking not found"}), 404
+
+        #  CHECK OWNERSHIP (email-based)
+        booking_email = booking.get("email")  # the email tied to the booking
+        requester_email = user_email          # from JWT
+        
+        if str(booking_email).lower() != str(requester_email).lower():
+            print(f"[AUTH] Unauthorized attempt by {requester_email} on booking owned by {booking_email}")
+            return jsonify({"status": "fail", "message": "Unauthorized to cancel this booking"}), 403
+        
+        #  CHECK IF ALREADY CANCELLED
+        if booking.get("status") == "cancelled":
+            print(f"[CANCEL_BOOKING] Booking {booking_id} already cancelled")
+            return jsonify({"status": "fail", "message": "Booking already cancelled"}), 400
+
+        # VALIDATE BOOKING DATE
+        try:
+            booking_date = datetime.strptime(booking.get("date"), "%Y-%m-%d")
+        except Exception as parse_err:
+            print(f"[CANCEL_BOOKING][PARSE_DATE] Invalid date format in booking: {booking.get('date')}")
+            return jsonify({"status": "fail", "message": "Invalid booking date format"}), 400
+
+        if booking_date <= datetime.now():
+            print(f"[CANCEL_BOOKING] Attempt to cancel past booking dated: {booking_date}")
+            return jsonify({"status": "fail", "message": "Cannot cancel past bookings"}), 400
+
+        # UPDATE STATUS TO CANCELLED
+        result = bookings_collection.update_one(
+            {"_id": ObjectId(booking_id)},
+            {"$set": {"status": "cancelled"}}
+        )
+        print(f"[DB] Update result: matched={result.matched_count}, modified={result.modified_count}")
+
+        if result.modified_count == 1:
+            return jsonify({"status": "success", "message": "Booking marked as cancelled"}), 200
+        else:
+            return jsonify({"status": "fail", "message": "No changes made to booking"}), 400
+
+    except Exception as e:
+        print(f"[CANCEL_BOOKING][ERROR] Exception occurred: {e}", file=sys.stderr)
+        return jsonify({"status": "error", "message": "Server error cancelling booking"}), 500
 
 
 
