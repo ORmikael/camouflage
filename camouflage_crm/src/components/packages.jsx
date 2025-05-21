@@ -151,7 +151,7 @@ const Packages = () => {
                 </div>
                 <div className="card-info">
                   <h2>{pkg.name}</h2>
-                  <p className="description">@ {pkg.price}</p>
+                  {/* <p className="description">@ {pkg.price}</p> */}
                   <p className="price">{pkg.description}</p>
                   <button className="booking-btn" onClick={() => handleSelectPackage(pkg)}>Book Now</button>
                   <button className="card-details-btn" onClick={() => handleToggleTimeline(pkg)}>&#8744;</button>
