@@ -17,13 +17,44 @@ const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
   const bookingSectionRef = useRef(null);
   const packagesSectionRef = useRef(null);
   const feedbackRef = useRef(null)
+// ================used for rebooking of previously biiked safaris==================================
+ useEffect(() => {
+  const savedBooking = JSON.parse(localStorage.getItem("rebookData"));
+  console.log("[REBOOK] Loaded booking:", savedBooking);
 
+  if (savedBooking) {
+    // PREFILL FORM DATA
+    setFormData((prev) => ({
+      ...prev,
+      name: savedBooking.name || "",
+      email: savedBooking.email || "",
+      phone: savedBooking.phone || "",
+      travelers: "" ,
+      date: "", // Force fresh date input for rebooking
+    }));
 
-  // useEffect(() => {
-  //   if (selectedPackage) {
-  //     // Optionally, you can prefill or update form data based on selectedPackage
-  //   }
-  // }, [selectedPackage]);
+    // SET SELECTED PACKAGE FROM BOOKING
+    if (savedBooking.packageId) {
+    const start = new Date(savedBooking.date);
+    const end = new Date(savedBooking.endDate);
+
+    const durationInDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
+
+      setSelectedPackage({
+        _id: savedBooking.packageId,
+        duration: `${durationInDays} `, 
+        price: `$${savedBooking.amount || "0"}`,
+      });
+    } else {
+      console.warn("[REBOOK] Missing packageId in saved booking data.");
+    }
+
+    // CLEAN UP
+    localStorage.removeItem("rebookData");
+  }
+}, []);
+
+// ===============================================================================================
 
   const scrollToRef = (ref) => {
     if (ref.current) {
@@ -62,7 +93,7 @@ const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
       email: formData.email,
       phone: formData.phone,
     
-      packageId: selectedPackage._id,
+      packageId: selectedPackage?._id ,
       date: formData.date,
       endDate: endDate, // computed or selected
       travelers: parseInt(formData.travelers, 10),
@@ -152,7 +183,7 @@ useEffect(() => {
 
 
       <section ref={bookingSectionRef} id="booking-form-section">
-        <form onSubmit={handleSubmit} className="booking-form">
+        <form onSubmit={handleSubmit} className="booking-form" id="booking-form">
         <div ref={feedbackRef}>
   {status.error && <div className="form-error">{status.error}</div>}
   {status.success && <div className="form-success">{status.success}</div>}
