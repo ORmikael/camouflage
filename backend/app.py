@@ -21,6 +21,7 @@ from payments import payments_bp
 from routes.bookings import bookings_bp
 from admin_profile.media_util import media_bp  # import blueprint
 from authentication.auth import auth_bp
+from config import PesapalConfig
 
 
 import certifi
@@ -31,10 +32,12 @@ print("[CERTIFI] Using CA bundle at:", certifi.where())
 
 
 app = Flask(__name__)
+app.config.from_object(PesapalConfig)
+
 CORS(app)
 application = app
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Replace with env var in prod
 
+app.config['JWT_SECRET_KEY'] = app.config.get('SECRET_KEY')  # Make sure SECRET_KEY exists
 jwt = JWTManager(app)  # ✅ Must be here
 
 #============= Get the database instance ======================
