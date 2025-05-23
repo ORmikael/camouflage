@@ -26,3 +26,4 @@ yarn-error.log*
 
 # large folders ( content that will be served from cdn)
 video/
+backend/static/

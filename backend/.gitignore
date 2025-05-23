@@ -33,7 +33,7 @@ Thumbs.db
 
 # large folders ( content that will be served from cdn)
 video/
-backend/static # contains media files that can be ignored and added manually
+backend/static/ # contains media files that can be ignored and added manually
 
 #  ARCHIVES & COMPRESSED FILES 
 *.zip

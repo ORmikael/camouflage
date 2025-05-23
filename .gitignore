@@ -35,3 +35,4 @@ coverage/
 
 # large media files 
 media/
+backend/static
