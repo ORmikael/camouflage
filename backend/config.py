@@ -14,7 +14,7 @@ class PesapalConfig:
         CONSUMER_KEY = os.getenv("PROD_PESAPAL_CONSUMER_KEY")
         CONSUMER_SECRET = os.getenv("PROD_PESAPAL_CONSUMER_SECRET")
         CALLBACK_URL = os.getenv("PROD_PESAPAL_CALLBACK_URL")
-        IPN_NOTIFICATION_URL = os.getenv("PROD_PESAPAL_IPN_URL")
+        IPN_URL = os.getenv("PROD_PESAPAL_IPN_URL")
         NOTIFICATION_ID = os.getenv("PROD_PESAPAL_NOTIFICATION_ID")
         BASE_URL = os.getenv("PROD_PESAPAL_URL")
         MEDIA_BASE_URL = os.getenv("PROD_MEDIA_BASE_URL")
@@ -41,3 +41,6 @@ class PesapalConfig:
 
 
  
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_USER = os.environ.get("EMAIL_USER")
+    EMAIL_PASS = os.environ.get("EMAIL_PASS")

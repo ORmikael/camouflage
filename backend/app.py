@@ -7,9 +7,11 @@ from bson import ObjectId
 from flask import Flask, jsonify,request, Response, send_file
 from flask_cors import CORS
 from datetime import datetime
-from email.message import EmailMessage
 from pymongo import errors
 from flask_jwt_extended import JWTManager
+import smtplib
+from email.message import EmailMessage
+from config import PesapalConfig as config
 
 
 
@@ -110,66 +112,7 @@ def subscribe_newsletter():
     return jsonify({"message": "Subscribed successfully"}), 200
 
 
-# ============================bookings route handler ===============================
 
-# # email confirmation 
-# def send_confirmation_email(to_email, name, travel_date, package):
-#     msg = EmailMessage()
-#     msg["Subject"] = "Booking Confirmation - Camouflage Tours"
-#     msg["From"] = "noreply@camouflage.com"
-#     msg["To"] = to_email
-#     msg.set_content(f"""
-#     Hi {name},
-
-#     Your booking for the "{package}" package on {travel_date.strftime('%B %d, %Y')} has been confirmed.
-
-#     Thank you for choosing Camouflage Tours!
-
-#     Regards,
-#     Camouflage Team
-#     """)
-#     try:
-#         with smtplib.SMTP('localhost') as smtp:
-#             smtp.send_message(msg)
-#     except Exception as e:
-#         logger.warning(f"Failed to send confirmation email to {to_email}: {e}")
-
-
-# @app.route("/api/bookings", methods=["POST"])
-# def create_booking():
-#     data = request.get_json()
-
-#     required = ["name", "email", "phone", "travelers", "date", "package"]
-#     if not all(field in data and data[field] for field in required):
-#         return jsonify({"error": "All required fields must be filled"}), 400
-
-#     if not re.match(EMAIL_REGEX, data["email"]):
-#         return jsonify({"error": "Invalid email format"}), 400
-
-#     try:
-#         data["travelers"] = int(data["travelers"])
-#         if data["travelers"] < 1:
-#             raise ValueError
-#     except ValueError:
-#         return jsonify({"error": "Travelers must be a positive integer"}), 400
-
-#     try:
-#         data["date"] = datetime.strptime(data["date"], "%Y-%m-%d")
-#     except ValueError:
-#         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
-
-#     try:
-#         booking_collection.insert_one(data)
-#         send_confirmation_email(data["email"], data["name"], data["date"], data["package"])
-#         return jsonify({"message": "Booking successful. Confirmation email sent."}), 200
-#     except errors.DuplicateKeyError:
-#         return jsonify({"error": "Booking already exists for this email and date."}), 409
-#     except Exception as e:
-#         logger.error(f"Booking insert failed: {e}")
-#         return jsonify({"error": "Internal server error"}), 500
-    
-
-# highlights route handler
 @app.route('/api/highlights', methods=['GET'])
 def get_all_highlights():
     highlights = []
@@ -195,23 +138,51 @@ def get_all_highlights():
 
 
 # destinations route handler
+from bson import ObjectId
+
+def convert_objectid_to_str(obj):
+    if isinstance(obj, ObjectId):
+        return str(obj)
+    elif isinstance(obj, list):
+        return [convert_objectid_to_str(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {k: convert_objectid_to_str(v) for k, v in obj.items()}
+    else:
+        return obj
+
 @app.route('/api/destinations', methods=['GET'])
 def get_destinations():
     destinations = []
     for dest in db["destinations"].find():
-        # Convert ObjectId to str if necessary
-        dest["_id"] = str(dest["_id"])
+        # Convert all ObjectId in the entire document to string recursively
+        dest = convert_objectid_to_str(dest)
 
-        # Resolve the image from the images collection
+        # Resolve the main image_id if present (optional, you already converted to str)
         if "image_id" in dest:
             image_doc = db["images"].find_one({"_id": ObjectId(dest["image_id"])})
             dest["image"] = image_doc["path"] if image_doc else None
-            # Optional: remove the image_id field from response
             del dest["image_id"]
-        
+
+        # Optionally, resolve nested details.related[].image_id to image path (if you want)
+        if "details" in dest and "related" in dest["details"]:
+            for rel in dest["details"]["related"]:
+                if "image_id" in rel:
+                    image_doc = db["images"].find_one({"_id": ObjectId(rel["image_id"])})
+                    rel["image"] = image_doc["path"] if image_doc else None
+                    del rel["image_id"]
+
+        # Similarly for details.highlights[].image_id
+        if "details" in dest and "highlights" in dest["details"]:
+            for highlight in dest["details"]["highlights"]:
+                if "image_id" in highlight:
+                    image_doc = db["images"].find_one({"_id": ObjectId(highlight["image_id"])})
+                    highlight["image"] = image_doc["path"] if image_doc else None
+                    del highlight["image_id"]
+
         destinations.append(dest)
 
     return jsonify(destinations)
+
 
 # packages route handler ( returns all packages in the databse as part of the response)
 @app.route('/api/packages/', methods=['GET'])
@@ -301,71 +272,7 @@ def get_videos():
     return jsonify(videos)
 
 
-# ===============================
-# FLASK API ROUTE: GET YOUTUBE VIDEOS
-# ===============================
 
-
-# @app.route("/api/videos")
-# def get_youtube_videos():
-#     videos = [
-#         {
-#             "src": "https://www.youtube.com/watch?v=cTF9RzEI5Ao&pp=ygUXc2FtYnVydSBzdXJ2aXZhbCBtb3ZpZXM%3D",
-#             "thumbnail": "/static/thumbnails/video1.jpg",
-#             "title": "Samburu Arrival"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=-bmsacpQipU&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
-#             "thumbnail": "/static/thumbnails/video2.jpg",
-#             "title": "Lake Nakuru Safari"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=Y2EwTrsCD64&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
-#             "thumbnail": "/static/thumbnails/video3.jpg",
-#             "title": "Masai Mara Adventure"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=A_vvxi_7YH0&pp=ygUPbC5uYWt1cnUgc2FmYXJp",
-#             "thumbnail": "/static/thumbnails/video4.jpg",
-#             "title": "Lake Naivasha Boat Ride"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=8OCzT4QBQ6g&pp=ygURYW1ib3NlbGkgd2lsZGxpZmU%3D",
-#             "thumbnail": "/static/thumbnails/video5.jpg",
-#             "title": "Amboseli Wildlife"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=aXrXLsKKJkk&pp=ygUedHNhdm8gd2VzdCBuYXRpb25hbCBwYXJrIGtlbnlh",
-#             "thumbnail": "/static/thumbnails/video6.jpg",
-#             "title": "Tsavo West Landscape"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=e3O9ZXS-9fI&pp=ygUddHNhdm8gZWFzdG5hdGlvbmFsIHBhcmsga2VueWE%3D",
-#             "thumbnail": "/static/thumbnails/video7.jpg",
-#             "title": "Tsavo East Elephants"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=ldhCVp1T94g&pp=ygUSbmFpcm9iaSBjaXR5IHRvdXIg",
-#             "thumbnail": "/static/thumbnails/video8.jpg",
-#             "title": "Nairobi City Tour"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=1TqBQzCuFOk&pp=ygURbGFtdSBpc2xhbmQga2VueWE%3D",
-#             "thumbnail": "/static/thumbnails/video9.jpg",
-#             "title": "Lamu Island Walkthrough"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=gU4Lz6B21xM&pp=ygUOY3VsdHVyYWwgZGFuY2XSBwkJiwkBhyohjO8%3D",
-#             "thumbnail": "/static/thumbnails/video10.jpg",
-#             "title": "Cultural Dance Show"
-#         },
-#         {
-#             "src": "https://www.youtube.com/watch?v=kVT43AYUcl8&pp=ygUOYmFsbG9vbiBzYWZhcmk%3D",
-#             "thumbnail": "/static/thumbnails/video11.jpg",
-#             "title": "Balloon Safari"
-#         }
-#     ]
-#     return jsonify(videos)
 
 
 
@@ -433,6 +340,47 @@ def get_other_staff():
         {'_id': 0}
     )
     return jsonify(list(docs)), 200
+
+
+# ===============================
+# CONTACT FORM EMAIL API
+# ===============================
+@app.route("/api/inquiry", methods=["POST"])
+def send_inquiry():
+    try:
+        data = request.get_json()
+
+        name = data.get("name")
+        email = data.get("email")
+        phone = data.get("phone")
+        address = data.get("address")
+        message = data.get("message")
+
+        msg = EmailMessage()
+        msg["Subject"] = f"Inquiry from {name}"
+        msg["From"] = email
+        msg["To"] = "info@camotrailsafari.co.ke"
+
+        msg.set_content(
+            f"""New inquiry received:\n
+            Name: {name}
+            Email: {email}
+            Phone: {phone}
+            Address: {address}
+            Message: {message}
+            """
+        )
+
+        # SMTP SEND LOGIC (example using Gmail SMTP)
+        with smtplib.SMTP_SSL(config.EMAIL_HOST, 465) as smtp:
+            smtp.login(config.EMAIL_USER, config.EMAIL_PASS)
+            smtp.send_message(msg)
+
+        return jsonify({"status": "success", "message": "Message sent successfully!"}), 200
+
+    except Exception as e:
+        print(f"[ERROR][INQUIRY] {e}")
+        return jsonify({"status": "error", "message": "Failed to send message"}), 500
 
 
 if __name__ == '__main__':

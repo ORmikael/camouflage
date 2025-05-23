@@ -1,3 +1,5 @@
+from email.message import EmailMessage
+import smtplib
 import sys
 from flask import Blueprint, request, jsonify
 from bson import ObjectId, errors as bson_errors
@@ -9,6 +11,7 @@ from pymongo import DESCENDING
 from functools import wraps
 import jwt
 from flask import current_app
+from config import PesapalConfig as config
 
 
 
@@ -111,12 +114,33 @@ def create_booking():
             {"$set": {"paymentId": ObjectId(payment_id), "status": "Being Processed"}}
         )
 
+
+        # ===============================================
+        # LOOKUP PACKAGE NAME USING packageId (ObjectId)
+        # ===============================================
+        package_doc = db["packages"].find_one({"_id": package_oid})
+
+        if not package_doc:
+            print(f"[BOOKING EMAIL ERROR] Package not found for ID: {package_oid}", file=sys.stderr)
+            return jsonify({
+                "status": "fail",
+                "message": "Booking saved, but package details missing. Please contact support."
+            }), 500
+
+        package_name = package_doc.get("name", "Safari Package")
+
+
+        # SEND CONFIRMATION EMAIL  
+        try:
+            send_confirmation_email(data['email'], data['name'], data['date'], package_name)
+        except Exception as e:
+            print(f"[Email Error] Failed to send confirmation email: {e}", file=sys.stderr)
+
         return jsonify({
-            "message": "booking submitted for processing, redirecting to payments page ...",
-            "bookingId": booking_id,
-            "redirect_url": redirect_url,
-            "paymentId": payment_id
-        }), 201
+            "status": "success",
+            "message": "Booking confirmed. Payment initiated.",
+            "redirect_url": redirect_url
+        }), 200
 
     # -------------------------------------------------------------
     # ❗ 5. HANDLE DUPLICATE BOOKING SCENARIOS
@@ -148,7 +172,7 @@ def create_booking():
     # 🧯 6. HANDLE UNEXPECTED ERRORS
     # -------------------------------------------------------------
     except Exception as e:
-        print(f"[Booking API Error]: {e}")
+        print(f"[Error: Booking API Handler CRASH ]: {e}")
         return jsonify({'error': 'Internal server error. Contact support.'}), 500
 
 
@@ -352,7 +376,7 @@ def cancel_booking(booking_id, user_email, user_id):
 
 # helper functions 
 
-
+# investigate and find out what we were sanitizing and why then comment correctly ( check in cancel booking and bookagain logics)
 def sanitize_doc(doc):
     sanitized = {}
     for key, value in doc.items():
@@ -374,9 +398,35 @@ def update_booking_status(db, booking_id, payment_id, payment_status):
             {'_id': ObjectId(booking_id)},
             {'$set': {
                 'paymentId': str(payment_id),
-                'status': payment_status.lower()
+                'status': "Confirmed"
             }}
         )
         print(f"[Booking Update] Booking {booking_id} updated with status {payment_status}")
     except Exception as e:
         print(f"[Booking Update Error]: {str(e)}")
+
+# ======================================
+# 📧 EMAIL CONFIRMATION FUNCTION
+# ======================================
+def send_confirmation_email(to_email, name, travel_date, package):
+    msg = EmailMessage()
+    msg["Subject"] = "Booking Confirmation - CamoTrails Safaris "
+    msg["From"] = config.EMAIL_USER
+    msg["To"] = to_email
+    msg.set_content(f"""
+    Hi {name},
+
+    Your booking for the "{package}" package on {travel_date} has been confirmed.
+
+    Thank you for choosing CamoTrails & Safaris Limited!
+
+    Regards,
+    CamoTrails Safaris 
+    """)
+    try:
+        with smtplib.SMTP_SSL(config.EMAIL_HOST, 465) as smtp:
+            smtp.login(config.EMAIL_USER, config.EMAIL_PASS)
+            smtp.send_message(msg)
+    except Exception as e:
+        print(f"[Email Error] Failed to send email: {e}", file=sys.stderr)
+
