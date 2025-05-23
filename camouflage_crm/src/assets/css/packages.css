@@ -8,7 +8,8 @@
 /* Hero-style section with blurred background */
 .packages-carousel-section {
   position: relative;
-  padding: 10rem 4rem 6rem;
+  padding: 10rem 1rem 6rem;
+  padding-bottom: 0;
   overflow: hidden;
   text-align: center;
 }
@@ -196,7 +197,7 @@ font-weight: bold;
   background-color: var(--ligh-olive-brown);
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  margin-left: 1rem;
+  margin-left: 1rem; 
 }
 
 /* horizontal features row  */
@@ -343,38 +344,43 @@ font-weight: bold;
 }
 
 /* fitler tags  */
-.footer-section.footer-tags {
-  margin-top: 20px;
+.hero-tags {
+  /* margin-top: 20px; */
+  padding: 2rem;
 }
 
-.footer-section.footer-tags h5 {
+.hero-tags h5 {
   font-size: 1.2rem;
   font-weight: bold;
   color: var(--white);
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1.5rem;
+  justify-content:center;
 }
-
+ 
 /* Styling for Each Tag */
-.footer-section.footer-tags .tag {
+.hero-tags .tag {
   display: inline-block;
   padding: 4px 10px;
   background-color: var(--accent-yellow); /* Adjust to match your color palette */
+  border: 1px solid var(--accent-yellow); /* Solid border with accent color */
+
   color: #fff;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  z-index: 5;
 }
 
 /* Hover Effect for Tags */
-.footer-section.footer-tags .tag:hover {
+.hero-tags .tag:hover {
   background-color: transparent; /* No background color */
   border: 1px solid var(--accent-yellow); /* Solid border with accent color */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Deep shadow effect */
@@ -383,7 +389,7 @@ font-weight: bold;
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .footer-section.footer-tags .tag {
+  .hero-tags .tag {
     font-size: 0.8rem;
     padding: 6px 12px;
   }

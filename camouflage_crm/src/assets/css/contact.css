@@ -49,15 +49,15 @@
 
 
 .contact-cta {
-  text-align: start;
+  text-align: center;
   /* margin-top: 2rem; */
   background-color: var(--forest-green);
   color: var(--white);
-  padding: 4rem 2rem;
+  padding:  2rem;
   /* padding: 6rem 2rem; */
 
   /* border-radius: 12px; */
-  height: 50vh;
+  /* height: 50vh; */
   /* margin-bottom: 100vh; */
 }
   
@@ -82,18 +82,20 @@
   /* max-width: 550px; */
   display: flex;
   /* gap: 2rem; */
-  padding: 6rem;
+  padding: 2rem 6rem;
   /* border-radius: 2rem; */
   background-color: var(--background);
+      gap: .5rem;
+
   /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
   /* margin: 5vh auto; */
-  transform: translateY(-30%);
+  /* transform: translateY(-30%); */
   /* transform: translateX(-50%); */
-  position: absolute;
+  /* position: absolute; */
   
-  top: 50%;
+  /* top: 50%; */
   /* right: 25%; */
-  left: 5%;
+  /* left: 5%; */
   /* right: 50%; */
   /* border: 1px solid red; */
   /* display: none; */
@@ -111,6 +113,8 @@
   gap: 1rem;
   justify-content: center;
   align-items: center;
+    box-shadow:  0 4px 20px rgba(0, 0, 0, 0.5);
+
 }
 
 .company-info i {
@@ -204,7 +208,7 @@ textarea {
 
   color: var(--white);
   padding: 3rem 2rem;
-  margin-top: 50vh;
+  /* margin-top: 50vh; */
   /* border: 3px dashed var(--accent-yellow); */
 }
 

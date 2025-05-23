@@ -87,6 +87,15 @@
   --accessible-tan: #af8c5e;
 
   --overlay-light: rgba(255, 255, 255, 0.85);
+
+
+
+  /* Example color tokens */
+--surface-earth: #303d2f;           /* a deep earthy green */
+--surface-tan: #3f3a2f;             /* muted olive-brown */
+--card-brown-overlay: #433f32;      /* subtle dark brown */
+--text-on-earth: #f3f1e7;           /* soft readable white */
+
 }
 
 

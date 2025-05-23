@@ -50,7 +50,9 @@ const Header = () => {
 
       <div className="header__container">
         <div className="header__logo">
+          {/* <img src="/camotrail logo.png" alt="Logo" /> */}
           <img src="/logo1.png" alt="Logo" />
+          {/* <img src="/logo2.png" alt="Logo" /> */}
         </div>
 
         {/* Nav Links */}

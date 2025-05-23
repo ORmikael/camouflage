@@ -46,15 +46,15 @@ const HeroSection = ({
   
 
   // destination  hero btn 
-  {buttons?.map((btn) => (
-    <button
-      key={btn.id}
-      id={btn.id}
-      onClick={() => handleButtonClick(btn.id)}
-    >
-      {btn.text}
-    </button>
-  ))}
+  // {buttons?.map((btn) => (
+  //   <button
+  //     key={btn.id}
+  //     id={btn.id}
+  //     onClick={() => handleButtonClick(btn.id)}
+  //   >
+  //     {btn.text}
+  //   </button>
+  // ))}
 
 // handle livechat using whatsApp
 const openWhatsApp = () => {

@@ -1,0 +1,323 @@
+/* ===============================
+   DESTINATION DETAILS PAGE STYLES
+=============================== */
+
+
+
+/* ========== MAIN CONTAINER ========== */
+.destination-details-container {
+  /* padding: 2rem; */
+    background: var(--forest-green);
+
+}
+
+/* ========== HERO / BANNER SECTION ========== */
+.destination-banner {
+  position: relative;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.destination-banner img {
+  width: 100%;
+  height: 55vh;
+  object-fit: cover;
+}
+
+.destination-banner h1 {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  color: var(--white);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+/* ========== MAIN INFO SECTION ========== */
+.main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  /* background-color: var(--surface-earth);   */
+  /* border-radius: 12px; */
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px var(--shadow-low);
+    color: var(--text-on-earth);            
+
+}
+.title-block  {
+ 
+  max-width: 50%;
+}
+
+.title-block h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+    color: var(--accessible-gold);        
+
+
+}
+
+.title-block p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  /* max-width: 50%; */
+    color: var(--accessible-tan);       
+}
+
+.price-block {
+  text-align: right;
+    color: var(--accessible-gold);        
+
+}
+
+.price-block p {
+  font-size: 1rem;
+  color: var(--accessible-tan);
+}
+
+.price-block h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  color: var(--jungle-green);
+
+}
+
+/* ========== RECOMMENDED DURATION ========== */
+.destination-duration {
+  /* padding: 1.5rem 2rem; */
+    /* background-color: var(--surface-earth);  */
+  margin-bottom: 2rem;
+  /* border-radius: 12px; */
+  box-shadow: 0 2px 6px var(--shadow-low);
+}
+
+.destination-duration h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+    color: var(--accessible-gold);
+
+}
+
+.destination-duration p {
+  font-size: 1rem;
+  color: var(--accessible-tan);
+}
+
+/* ========== RELATED LOCATIONS ========== */
+.related-locations {
+  padding: 2rem;
+  /* border-radius: 12px; */
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px var(--shadow-low);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+      /* background-color: var(--surface-earth);   */
+
+}
+
+.related-locations h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--accessible-gold);
+}
+
+.related-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+    /* max-height: fit-content; */
+
+}
+
+.related-card {
+  /* height: 10rem; */
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px;
+  max-width: 220px;
+  color: var(--off-white);
+  background-color: var(--dark-olive-brown);
+  padding-bottom: 1rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 4px var(--shadow-low);    max-height: fit-content;
+
+}
+
+.related-card img {
+  width: 100%;
+  /* height: 8rem; */
+  /* height: 140px; */
+  object-fit: cover;
+  /* border-radius: 0.5rem; */
+  margin-bottom: 0.75rem;
+}
+
+.related-card p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.related-card:hover {
+  transform: scale(1.02);
+}
+
+/* ========== HIGHLIGHTS SECTION ========== */
+.destination-highlights {
+  /* background-color: var(--surface-earth); */
+  /* margin-bottom: 2rem; */
+  padding: 4rem 6rem;
+  display: flex;
+  flex-direction: column;
+align-items: center;  color: var(--text-on-dark);
+}
+
+.destination-highlights h3,
+.destination-highlights h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--accessible-gold);
+}
+
+.destination-highlight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.destination-highlight-card {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  padding: 1rem;
+  gap: 1.5rem;
+  align-items: flex-start;
+  background-color: var(--dark-olive-brown);
+  /* border-radius: 0.75rem; */
+}
+
+.destination-highlight-card img {
+  width: 25%;
+  max-width: 25%;
+  max-height:5rem ;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.destination-highlight-text h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accessible-gold);
+}
+
+.destination-highlight-text p {
+  font-size: 1rem;
+  margin-top: 0.25rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--off-white);
+}
+
+.destination-highlights ul {
+  list-style: disc inside;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.destination-highlights li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--off-white);
+}
+
+/* ========== DESTINATION INFO SECTION ========== */
+
+.destination-info-section {
+  /* REMOVE BACKGROUND */
+  background-color: transparent;  /* No background */
+
+  color: var(--off-white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: none; /* remove shadow since bg is gone */
+  margin-bottom: 2rem;
+
+  /* TWO COLUMNS */
+ 
+}
+
+.destination-info-section h2 {
+  /* Span across both columns */
+  grid-column: 1 / -1;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--accessible-gold);
+  text-align: center;
+
+}
+
+
+/* ========== PARK DETAILS SECTION ========== */
+
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+   display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap:  2rem;
+  
+}
+
+
+.info-list li {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--off-white);
+}
+
+.info-list strong {
+  display: block;
+  font-weight: 600;
+  color: var(--accessible-gold);
+  margin-bottom: 0.25rem;
+}
+
+
+
+/* ========== DESTINATION DETAILS SECTION CLOSE BTN ========== */
+
+.destination-close-btn {
+  text-align: center;
+  padding: 2rem;
+}
+
+.destination-close-btn button {
+  background-color: var(--accent-yellow);
+  color: #000;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.destination-close-btn button:hover {
+  background-color: var(--accent-yellow); /* keep if needed */
+
+  /* === REDDISH GLOW EFFECT === */
+  box-shadow: 0 0 20px 3px rgba(255, 0, 0, 0.8); /* red glow */
+  transition: box-shadow 0.5s ease;
+}

@@ -161,7 +161,16 @@ const Packages = () => {
           </div>
 
           <button className="carousel-nav right" onClick={scrollRight}>&gt;</button>
+          
         </div>
+          <div className=" hero-tags">
+            {/* <h5>Popular Tags</h5> */}
+            <div className="tag-list">
+              {["Adventure", "Hiking", "Beach", "Cultural", "Luxury", "Safari"].map(tag => (
+                <span key={tag} className="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
       </section>
 
       {/* === Booking Form Section === */}
@@ -206,14 +215,14 @@ const Packages = () => {
       {/* === Footer Section === */}
       <section className="about-footer-cta">
         <div className="footer-grid">
-          <div className="footer-section latest-news">
+          {/* <div className="footer-section latest-news">
             <h6>Latest News</h6>
             <ul>
               <li>🌍 Top 10 Destinations for 2025</li>
               <li>🏕️ Travel Gear You Must Have</li>
               <li>✈️ How to Plan Efficient Travel</li>
             </ul>
-          </div>
+          </div> */}
 
           <div className="footer-section contact-info">
             <h5>Contact Info</h5>
@@ -224,14 +233,7 @@ const Packages = () => {
 
           <NewsletterSignup />
 
-          <div className="footer-section footer-tags">
-            <h5>Popular Tags</h5>
-            <div className="tag-list">
-              {["Adventure", "Hiking", "Beach", "Cultural", "Luxury", "Safari"].map(tag => (
-                <span key={tag} className="tag">{tag}</span>
-              ))}
-            </div>
-          </div>
+        
         </div>
       </section>
     </main>

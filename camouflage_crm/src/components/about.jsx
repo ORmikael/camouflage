@@ -119,7 +119,7 @@ const About = () => {
   <div className="footer-grid">
 
     {/* Quick Links */}
-    <div className="footer-section quick-links">
+    {/* <div className="footer-section quick-links">
       <h5>Quick Links</h5>
       <ul>
         <li><Link to="/">Home</Link></li>
@@ -129,7 +129,7 @@ const About = () => {
         <li><Link to="/blog">Blog</Link></li>
         <li><Link to="/contact">Contact Us</Link></li>
       </ul>
-    </div>
+    </div> */}
 
    {/* Contact Info */}
 <div className="footer-section contact-info">

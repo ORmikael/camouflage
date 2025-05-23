@@ -228,10 +228,10 @@
 
 
 .destinations-gallery {
-  max-height: 0;
+  /* max-height: 0; */
   overflow: hidden;
   transition: max-height 0.8s ease-in-out, padding 0.5s ease;
-  padding: 0 2rem;
+  padding:  4rem;
   background-color: var(--forest-green);
   display: flex;
   flex-wrap: wrap;
@@ -239,6 +239,7 @@
   /* flex-direction: column; */
   gap: 1.5rem;
   position:relative ;
+
 }
 .destinations-gallery h2{
   position: absolute;
@@ -247,12 +248,7 @@
   color: var(--white);
 }
 
-.destinations-gallery.visible {
-  max-height: 1000px; 
-  padding: 2rem;
-  padding-top: 4rem;
 
-}
 
 
 .gallery-card {
@@ -316,8 +312,16 @@
 .explore-arrow-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 0 12px var(--accent-yellow);
+
+
+
+}
+  /* ===================================================DESTINATION DETAILS SECTION =================================== */
+#destination-details-section {
+  scroll-margin-top: 8rem; /* creates space when scrolled into view */
 }
 
+/* =============================================================================================== */
 
 /* ===================================page footer section========================================== */
 .destination-footer-cta {

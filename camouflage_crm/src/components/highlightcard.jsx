@@ -46,7 +46,7 @@ const HighlightsSection = () => {
           <div className="highlight-info">
             <h4>{card.title}</h4>
             <p>{card.description}</p>
-            <span className="highlight-price">{card.price}</span>
+            {/* <span className="highlight-price">{card.price}</span> */}
           </div>
         </article>
       ))}

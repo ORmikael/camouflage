@@ -5,6 +5,7 @@ import HeroSection from './hero';
 import NewsletterSignup from './newsletter';
 
 import { useLocation } from 'react-router-dom';
+import DestinationDetails from './destinationdetails';
 
 
 
@@ -22,6 +23,10 @@ const Destinations = () => {
   const [error, setError] = useState(null);
   const [isGalleryVisible, setGalleryVisible] = useState(false);
   const [displayedDestinations, setDisplayedDestinations] = useState([]);
+    const [selectedDetails, setSelectedDetails] = useState(null);
+      const [selectedDestination, setSelectedDestination] = useState(null);
+
+
 
   useEffect(() => {
     fetch(`${baseURL}/api/destinations`)
@@ -35,6 +40,20 @@ const Destinations = () => {
         setError("Failed to load destinations.");
       });
   }, []);
+
+ // Sets the selected destination (used to conditionally render details section),
+// then scrolls to the DestinationDetails component.
+function handleExploreClick(destination) {
+  setSelectedDestination(destination);
+
+  // Smooth scroll to the details section
+  setTimeout(() => {
+    const section = document.getElementById("destination-details-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  }, 100); // Allow state to update
+}
 
 
   useEffect(() => {
@@ -144,7 +163,7 @@ const Destinations = () => {
     </div> */}
   </div>
 </section>
-<section id="destinations-gallery" className={`destinations-gallery ${isGalleryVisible ? 'visible' : ''}`}>
+<section id="destinations-gallery" className="destinations-gallery">
 
   <h2>Curated gems for that perfect getaway </h2>
   {displayedDestinations.map((dest, index) => (
@@ -156,11 +175,24 @@ const Destinations = () => {
         <h3>{dest.name}</h3>
         <p>{dest.description}</p>
       </div>
-      <button className="explore-arrow-btn">
-      <i class="fa-solid fa-arrow-right-long"></i></button>
+      <button className="explore-arrow-btn"
+        onClick={() => handleExploreClick(dest)}
+      >
+      <i class="fa-solid fa-arrow-right-long"></i>
+      </button>
     </article>
   ))}
 </section>
+
+{selectedDestination && (
+  <div id="destination-details-section">
+    <DestinationDetails
+      destination={selectedDestination}
+      onClose={() => setSelectedDestination(null)}
+    />
+  </div>
+)}
+
 
 
 <section className="destination-footer-cta">
