@@ -3,7 +3,8 @@ import os, smtplib, logging,re
 from db import get_db  # Import the database connection
 
 
-from bson import ObjectId
+from bson import ObjectId 
+
 from flask import Flask, jsonify,request, Response, send_file
 from flask_cors import CORS
 from datetime import datetime
@@ -381,6 +382,72 @@ def send_inquiry():
     except Exception as e:
         print(f"[ERROR][INQUIRY] {e}")
         return jsonify({"status": "error", "message": "Failed to send message"}), 500
+
+
+# =================================
+# /api/search 
+# =================================
+
+@app.route('/api/search', methods=['GET'])
+def search():
+    try:
+        keyword = request.args.get('q', '').lower()
+        if not keyword:
+            return jsonify({"status": "fail", "message": "No keyword provided."}), 400
+
+        # Query each collection
+        results = {
+            "destinations": search_collection("destinations", keyword),
+            "packages": search_collection("packages", keyword),
+            "videos": search_collection("videos", keyword),
+            "images": search_collection("images", keyword),
+        }
+
+        return jsonify({
+            "status": "success",
+            "message": "Search completed.",
+            "results": results
+        }), 200
+
+    except Exception as e:
+        print(f"[SEARCH] ERROR: {e}")
+        return jsonify({"status": "error", "message": "Internal server error."}), 500
+
+
+
+# ========================================
+# HELPER FUNCTION TO CLEAN MONGO RESULTS
+# ========================================
+
+
+def clean_doc(obj):
+    if isinstance(obj, dict):
+        return {k: clean_doc(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [clean_doc(item) for item in obj]
+    elif isinstance(obj, ObjectId):
+        return str(obj)
+    else:
+        return obj
+
+
+# ========================================
+# HELPER FUNCTION TO SEARCH COLLECTION
+# ========================================
+
+def search_collection(collection_name, keyword):
+    collection = db[collection_name]
+    query = {
+        "$or": [
+            {"title": {"$regex": keyword, "$options": "i"}},
+            {"description": {"$regex": keyword, "$options": "i"}},
+            {"tags": {"$regex": keyword, "$options": "i"}},
+        ]
+    }
+
+    results = list(collection.find(query))
+    return [clean_doc(doc) for doc in results]
+    
 
 
 if __name__ == '__main__':

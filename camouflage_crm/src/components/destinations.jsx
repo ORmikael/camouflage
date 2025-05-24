@@ -23,11 +23,12 @@ const Destinations = () => {
   const [error, setError] = useState(null);
   const [isGalleryVisible, setGalleryVisible] = useState(false);
   const [displayedDestinations, setDisplayedDestinations] = useState([]);
-    const [selectedDetails, setSelectedDetails] = useState(null);
-      const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const location = useLocation();
+  const [showDetails, setShowDetails] = useState(false);
 
 
-
+// effect to fetch all destinations   // 
   useEffect(() => {
     fetch(`${baseURL}/api/destinations`)
       .then(res => {
@@ -41,10 +42,53 @@ const Destinations = () => {
       });
   }, []);
 
- // Sets the selected destination (used to conditionally render details section),
+useEffect(() => {
+  const idToScrollTo = location.state?.scrollToId;
+  if (idToScrollTo && destinations.length > 0) {
+    const match = destinations.find(dest => dest._id === idToScrollTo);
+    if (match) {
+      setSelectedDestination(match);
+
+      setTimeout(() => {
+        const el = document.getElementById(`destination-card-${idToScrollTo}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('highlighted');
+          setTimeout(() => el.classList.remove('highlighted'), 2000);
+        }
+
+        // ✅ Clear the state so it doesn’t persist
+        window.history.replaceState({}, document.title);
+      }, 300);
+    }
+  }
+}, [location.state, destinations]);
+
+
+
+function openDestinationDetails(destination) {
+  setSelectedDestination(destination);
+  setShowDetails(true);
+
+  setTimeout(() => {
+    const section = document.getElementById("destination-details-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+
+      // ✅ Clear navigation state after scroll
+      window.history.replaceState({}, document.title);
+    }
+  }, 100);
+}
+
+
+
+ 
 // then scrolls to the DestinationDetails component.
 function handleExploreClick(destination) {
   setSelectedDestination(destination);
+
+ 
 
   // Smooth scroll to the details section
   setTimeout(() => {
@@ -54,6 +98,15 @@ function handleExploreClick(destination) {
     }
   }, 100); // Allow state to update
 }
+ useEffect(() => {
+  if (location.state?.openDetails && location.state.destination) {
+    openDestinationDetails(location.state.destination);
+
+    // ✅ Clear openDetails state
+    window.history.replaceState({}, document.title);
+  }
+}, [location.state]);
+
 
 
   useEffect(() => {
@@ -71,7 +124,6 @@ function handleExploreClick(destination) {
   
 
 
- const location = useLocation();
 
   useEffect(() => {
     if (location.state?.scrollToGallery) {
@@ -167,7 +219,15 @@ function handleExploreClick(destination) {
 
   <h2>Curated gems for that perfect getaway </h2>
   {displayedDestinations.map((dest, index) => (
-    <article className="gallery-card" key={index}>
+
+    <div
+  key={dest._id}
+  id={`destination-card-${dest._id}`}
+  className="destination-card gallery-card"
+>
+  {/* CARD CONTENT */}
+
+ <article className="" key={index}>
           <div className='overlay'/>
 
       <img src={`${baseURL}/${dest.image}`} alt={dest.name} />
@@ -180,11 +240,13 @@ function handleExploreClick(destination) {
       >
       <i class="fa-solid fa-arrow-right-long"></i>
       </button>
-    </article>
+    </article></div>
+
+   
   ))}
 </section>
 
-{selectedDestination && (
+{ selectedDestination && (
   <div id="destination-details-section">
     <DestinationDetails
       destination={selectedDestination}

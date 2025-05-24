@@ -4,6 +4,7 @@ import { baseURL } from '../utils/config';
 import '../assets/css/packages.css';
 import NewsletterSignup from './newsletter';
 import BookingForm from './booking';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import packagesHeaderCarousel from './packagesHeaderCarousel'; // (Assuming for future use)
 
 // ========================== MAIN COMPONENT ==========================
@@ -21,10 +22,14 @@ const Packages = () => {
   const carouselRef = useRef(null);
   const sectionRef = useRef(null);
   const scrollIntervalRef = useRef(null);
+  const location = useLocation()
+  const scrollToIdRef = useRef(null);
+  const navigate =useNavigate()
+
 
   // ========================== FETCH ALL PACKAGES ON MOUNT ==========================
   useEffect(() => {
-    const fetchPackages = async () => {
+    const fetchPackages = async () => { 
       try {
         const res = await fetch(`${baseURL}/api/packages`);
         const data = await res.json();
@@ -35,6 +40,33 @@ const Packages = () => {
     };
     fetchPackages();
   }, []);
+// ========================== EFFECT: SCROLL TO SPECIFIC PACKAGE ==========================
+useEffect(() => {
+  if (location.state?.scrollToId) {
+    scrollToIdRef.current = location.state.scrollToId;
+  }
+
+  if (scrollToIdRef.current && packages.length > 0) {
+    const timer = setTimeout(() => {
+      const targetCard = document.getElementById(`package-${scrollToIdRef.current}`);
+
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetCard.classList.add('focus-effect');
+
+        setTimeout(() => targetCard.classList.remove('focus-effect'), 1200);
+      }
+
+      // 🔥 Clear ref and router state
+      scrollToIdRef.current = null;
+      navigate(location.pathname, { replace: true }); // Removes state
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }
+}, [packages, location.state]);
+
+
 
   // ========================== HANDLE PACKAGE TIMELINE TOGGLE ==========================
   const handleToggleTimeline = async (pkg) => {
@@ -51,7 +83,8 @@ const Packages = () => {
 
     const isNewSelection = selectedPackage?._id !== pkg._id;
 
-    if (isNewSelection) {
+    if (isNewSelection) { 
+      
       try {
         const res = await fetch(`${baseURL}/api/packages/${pkg._id}`);
         const data = await res.json();
@@ -144,7 +177,7 @@ const Packages = () => {
             onMouseLeave={() => setIsHovered(false)}
           >
             {packages.map((pkg) => (
-              <article className="carousel-card" key={pkg._id}>
+              <article className="carousel-card" key={pkg._id} id={`package-${pkg._id}`}>
                 <div className="card-image">
                   <img src={`${baseURL}/${pkg.image}`} alt={pkg.name} />
                   <div className="image-overlay" />

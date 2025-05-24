@@ -226,6 +226,12 @@
 
 /* ============================================================destination gallery =================================== */
 
+.destination-card.highlighted {
+  outline: 2px solid var(--accent-yellow);
+  transition: outline 0.3s ease-in-out;
+}
+
+
 
 .destinations-gallery {
   /* max-height: 0; */
