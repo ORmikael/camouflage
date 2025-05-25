@@ -25,6 +25,7 @@ from routes.bookings import bookings_bp
 from admin_profile.media_util import media_bp  # import blueprint
 from authentication.auth import auth_bp
 from config import PesapalConfig
+from reviews.review import reviews_bp
 
 
 import certifi
@@ -58,6 +59,8 @@ app.register_blueprint(user_profile_bp, url_prefix="/api/profile")
 app.register_blueprint(payments_bp, url_prefix="/api/payments")
 app.register_blueprint(bookings_bp, url_prefix="/api")
 app.register_blueprint(media_bp, url_prefix='/api/media')  # All routes inside will be prefixed
+app.register_blueprint(reviews_bp)
+
 
 
 
@@ -84,12 +87,12 @@ def statusCallback():
 
 
 # reviews route handler
-@app.route('/api/reviews', methods=['GET'])
-def get_reviews():
-    reviews = []
-    for review in db["reviews"].find({}, {"_id": 0}):
-        reviews.append(review)
-    return jsonify(reviews)
+# @app.route('/api/reviews', methods=['GET'])
+# def get_reviews():
+#     reviews = []
+#     for review in db["reviews"].find({}, {"_id": 0}):
+#         reviews.append(review)
+#     return jsonify(reviews)
 
 #  newsletter route handler 
 @app.route("/api/newsletter/subscribe", methods=["POST"])

@@ -7,18 +7,26 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [current, setCurrent] = useState(0); // <-- ✅ THIS LINE FIXES THE ERROR
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await fetch(`${baseURL}/api/reviews`);
-        const data = await res.json();
-        setReviews(data);
-      } catch (err) {
-        console.error('Failed to fetch reviews:', err);
+ useEffect(() => {
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch(`${baseURL}/api/reviews/fetch`);
+      const json = await res.json();
+
+      if (json.status === "success" && Array.isArray(json.data)) {
+        setReviews(json.data);  // ✅ Only the array part
+      } else {
+        console.error("Invalid reviews response:", json);
+        setReviews([]);
       }
-    };
-    fetchReviews();
-  }, []);
+    } catch (err) {
+      console.error("Failed to fetch reviews:", err);
+    }
+  };
+
+  fetchReviews();
+}, []);
+
 
   useEffect(() => {
     if (reviews.length === 0) return;
@@ -28,7 +36,9 @@ const Reviews = () => {
     return () => clearInterval(interval);
   }, [reviews]);
 
-  if (reviews.length === 0) return null;
+if (!Array.isArray(reviews) || reviews.length === 0) {
+  return <p>No reviews available.</p>;
+}
 
   return (
     <div className="reviews">
