@@ -124,7 +124,7 @@ function handleExploreClick(destination) {
   
 
 
-
+// scroll to destination gallery using hero btn 
   useEffect(() => {
     if (location.state?.scrollToGallery) {
       setGalleryVisible(true);
@@ -138,7 +138,15 @@ function handleExploreClick(destination) {
     }
   }, [location.state])
 
-  
+  // scroll to destination gallery using foooter btn 
+  function scrollToGallery() {
+  const el = document.getElementById('destinations-gallery');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+
 
   return (
     <main className="destinations-page">
@@ -272,7 +280,9 @@ function handleExploreClick(destination) {
 
     <div className="destination-section ">
       <p>Adventure awaits... unleash your nomadic spirit </p>
-        <button  onClick={() => setGalleryVisible(prev => !prev)}>Explore destinations </button>
+<button onClick={scrollToGallery} className="scroll-to-gallery-btn">
+  Explore Destinations
+</button>
       
     </div>
     
