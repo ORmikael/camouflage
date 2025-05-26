@@ -22,7 +22,7 @@
   justify-content: center;
   position: relative;
   background: url('../../../public/media/images/mountain.jpeg') no-repeat center/cover;
-  height: 35vh;
+  height: 34vh;
   border-radius: 1rem;
   /* margin-bottom: 1rem; */
   padding: 10px;
@@ -136,21 +136,6 @@
   gap: var(--spacing-sm);
 }
 
-.utility-button {
-  background-color: var(--accent-yellow);
-  color: var(--text-on-light);
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px var(--shadow-low);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s,  box-shadow 0.3s;
-}
 
 .utility-button:hover {
   background-color: var(--accessible-gold);
@@ -169,3 +154,53 @@
 .utility-icon {
   margin: 0;
 }
+.usr-utilities {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+}
+
+.utility-button {
+  border:1px solid var(--accent-yellow);
+  background: none;
+
+  color: var(--accent-yellow);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px var(--shadow-low);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  /* border: none; */
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s,  box-shadow 0.3s;
+}
+
+
+.utility-button:hover {
+  background: var(--accent-yellow-light);
+  transform: translateY(-2px);
+}
+
+.utility-icon {
+  color: var(--accessible-gold);
+  font-size: 1.1rem;
+}
+.activity-section {
+  background: var(--glass-white);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-md);
+  color: var(--text-primary);
+}
+
+.activity-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--accessible-gold);
+}
+

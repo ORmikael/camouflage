@@ -10,8 +10,11 @@
   /* === Brand Core Colors === */
   --dark-olive-brown: #2d2812;
   --accent-tan: #a87b47;
+  --accent-red: #f02c22dc;
   --accent-yellow: #e2a845;
-  --light-olive-brown: #2b2413;
+  /* --light-olive-brown: #2b2413; */
+  --link-sunset-orange: #ff7847; /* High contrast, complements both forest and yellow */
+  --light-olive-brown: #6c654e;
 
   /* === Animal-Inspired Darks === */
   --deep-brown: #1a140d;

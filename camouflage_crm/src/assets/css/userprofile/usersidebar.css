@@ -1,81 +1,95 @@
+/* ===========================================
+   USER SIDEBAR - REFINED AUTH PAGE AESTHETIC
+   =========================================== */
+
 .user-sidebar {
-    width: 20rem;
-    background-color: var(--jungle-green);
-    color: var(--white);
-    padding: 1.5rem;
-    /* border-radius: 1rem; */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .profile-box {
-    text-align: center;
-  }
-  
-  .profile-pic {
-    width: 7rem;
-    height: 7rem;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--accent-gold);
-  }
-  
-  .user-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-top: 1rem;
-    color: var(--white);
-  }
-  
-  .user-role {
-    font-size: 0.95rem;
-    color: var(--white);
-  }
-  
-  .sidebar-nav  {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .sidebar-nav a {
-    all: unset;
-  }
-  .sidebar-nav button {
-    all: unset;
-  }
-  .sidebar-nav li {
-    margin-bottom: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--white);
-    transition: color 0.3s ease;
-  }
-  
-  .sidebar-nav li:hover {
-    color: var(--accent-yellow);
-  }
-  
-  
-  .user-stats {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .user-stats div {
-    text-align: center;
-  }
-  
-  .stat-number {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--accent-gold);
-  }
-  
-  .stat-label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--white);
-  }
-  
+  width: 20rem;
+  background-color: rgba(54, 94, 62, 0.75); /* jungle-green translucent */
+  color: var(--white);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin:  1rem 0;
+  margin-left: 1rem;
+}
+
+/* PROFILE SECTION */
+.profile-box {
+  text-align: center;
+}
+
+.profile-pic {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-yellow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.user-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  color: var(--accessible-gold);
+}
+
+.user-role {
+  font-size: 0.95rem;
+  color: var(--off-white);
+  opacity: 0.8;
+}
+
+/* NAVIGATION */
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-nav a,
+.sidebar-nav button {
+  all: unset;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--off-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--accent-yellow);
+}
+
+/* USER STATS */
+.user-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.user-stats div {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent-yellow);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--off-white);
+  opacity: 0.8;
+}
