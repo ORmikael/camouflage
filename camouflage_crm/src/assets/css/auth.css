@@ -1,0 +1,85 @@
+/* ===============================
+   AUTH FORM STYLING - CAMO TOURS
+   =============================== */
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("../../../public/media/images/reviewbg3.jpg") no-repeat center center/cover;
+  backdrop-filter: brightness(0.6);
+  padding: 2rem;
+  color: var(--accent-yellow);
+}
+
+/* IMPROVED FORM CARD */
+form {
+  background-color: rgba(108, 101, 78, 0.75); /* semi-translucent light olive brown */
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  backdrop-filter: blur(6px); /* smoothens the translucency */
+}
+
+/* INPUT FIELDS */
+input {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--accent-yellow, #f4c430);
+  background-color: rgba(255, 255, 255, 0.15); /* translucent input */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); /* subtle depth */
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+  border-color: #d4a200;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* SUBMIT BUTTON */
+button[type="submit"] {
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: var(--accent-yellow, #f4c430);
+  color: #000;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"]:hover {
+  background-color: #e1b900;
+}
+
+/* LINK STYLING */
+.auth-page a {
+  all: unset;
+  color: var(--link-sunset-orange, #ff7847); /* NEW: override with standout color */
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.auth-page p {
+  text-align: center;
+  font-size: 1rem;
+}
