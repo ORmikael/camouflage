@@ -1,6 +1,7 @@
 import { useLocation,Link} from "react-router-dom";
 import LoginForm from "./login";
 import SignupForm from "./signup";
+import "../assets/css/auth.css";
 
  const AuthPage = () => {
   const location = useLocation();

@@ -1,150 +1,192 @@
+// ===============================
+// PROFILE PAGE MAIN LAYOUT
+// Enhanced UI/UX + Styling Revision
+// ===============================
+
 import '../assets/css/colors.css';
 import '../assets/css/profile.css';
-import React, { useEffect, useState }  from 'react'; 
-import {baseURL} from "../utils/config"
-import { Link } from 'react-router-dom';
-
-
-
+import React, { useEffect, useState } from 'react';
+import { baseURL } from "../utils/config";
+import { Link, useLocation } from 'react-router-dom';
 
 import UserSidebar from './userProfilecomponets/UserSidebar';
 import UserTourCarousel from './userProfilecomponets/UserTourCarousel';
 import UserActivityTimeline from './userProfilecomponets/UserActivityTimeline';
 import LoadingMessage from './errorloadingpage';
 import MyBookings from './userProfilecomponets/mybookings';
-import { useLocation } from 'react-router-dom';
+import ReviewModal from './userProfilecomponets/makereview';
 
 const ProfilePage = () => {
-    const location = useLocation();
-
+  const location = useLocation();
   const [userData, setUserData] = useState(null);
-  const activeSection = location.hash === "#bookings";
+  // const activeSection = location.hash === "#bookings";
+  const [activeSection, setActiveSection] = useState(null);
+  
+  const [showModal, setShowModal] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState(null);
   
 
+  // ===============================
+  // MAIN EFFECT: FETCH USER PROFILE DATA
+  // ===============================
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
 
+  if (!storedUser) {
+    console.error("[USER] No user found in localStorage");
+    return;
+  }
 
-   useEffect(() => {
-    const testFetch = async () => {
-      const user = JSON.parse(localStorage.getItem("user"))
-      const userId = user?.userId
+  try {
+    const parsedUser = JSON.parse(storedUser);
+    if (!parsedUser?.userId) {
+      console.error("[USER] userId missing in parsed user object");
+      return;
+    }
+
+    setCurrentUser(parsedUser);
+
+    const fetchProfile = async () => {
       try {
-        console.log('baseURL:', baseURL);
-        const res = await fetch(`${baseURL}/api/profile/usr?user_id=${userId}`);
-        console.log('Response object:', res);
-  
+        const res = await fetch(`${baseURL}/api/profile/usr?user_id=${parsedUser.userId}`);
         const data = await res.json();
-        console.log('User data:', data);
-  
         setUserData(data);
       } catch (err) {
-        console.error('Fetch error:', err);
+        console.error('[PROFILE_FETCH]', err);
       }
     };
+
+    fetchProfile();
+  } catch (parseError) {
+    console.error("[USER] Failed to parse user from localStorage", parseError);
+  }
+}, [showModal]);
+
+
+
+  // ===============================
+// SYNC ACTIVE SECTION WITH URL HASH
+// ===============================
+useEffect(() => {
+  const hash = location.hash.replace("#", "");
   
-    testFetch();
-  }, []);
+  // Reset modal visibility always
+  setShowModal(false);
 
-  if (!userData) return <LoadingMessage/>;
+  // Reset section properly
+  if (hash === "") {
+    setActiveSection(null);
+  } else {
+    setActiveSection(hash);
+  }
+}, [location.hash]);
 
-  
-  let highlightsArray = [];
-  let activitiesArray = []
 
-try {
-  // parse hightlights and actvities stored as strings to objects for use in the child componenss
  
-  highlightsArray = JSON.parse(userData.stats.highlights);
-  if (!Array.isArray(highlightsArray)) {
-    console.error("Parsed highlights is not an array:", highlightsArray);
-    highlightsArray = [];
-  } 
+
+  if (!userData) return <LoadingMessage />;
+
+  // ===============================
+  // PARSE USER STATS ARRAYS
+  // ===============================
+  let highlightsArray = [];
+  let activitiesArray = [];
+
+  try {
+    highlightsArray = JSON.parse(userData.stats.highlights);
+    if (!Array.isArray(highlightsArray)) highlightsArray = [];
 
     activitiesArray = JSON.parse(userData.stats.activities);
-    
-  if (!Array.isArray(activitiesArray)) {
-    console.error("Parsed highlights is not an array:", activitiesArray);
-    activitiesArray = [];
+    if (!Array.isArray(activitiesArray)) activitiesArray = [];
+  } catch (error) {
+    console.error('[PARSE_STATS]', error);
   }
-} catch (error) {
-  console.error("Failed to parse highlights JSON:", error);
-}
+
+
+
+  // ===============================
+  // RENDER
+  // ===============================
   return (
     <div className="profile-page">
       <UserSidebar userData={userData} />
+
       <main className="profile-main">
+        {/* ===================== HERO SECTION ===================== */}
         <section className="profile-hero">
           <div className="hero-ooverlay">
-            
             <h1>Welcome back, {userData.name?.split(" ")[0]}</h1>
-            <Link to="/destinations"><button className="cta-button">Explore Destinations</button></Link>
+            <Link to="/destinations">
+              <button className="cta-button">Explore Destinations</button>
+            </Link>
           </div>
         </section>
+
+        {/* ===================== BODY SECTION ===================== */}
         <div className="profile-section-wrapper">
+         <section className="tour-carousel">
+  {activeSection === "bookings" ? (
+    <MyBookings />
+  ) : showModal  ? (
+    <ReviewModal
+  show={showModal}
+  onClose={() => setShowModal(false)}
+  user={currentUser}
+ 
+/>
 
-        <section className="tour-carousel">
-           {activeSection ? (
-          <MyBookings />
-        ) :(<div className="recommendation-section">
-          
-                      {/* utility buttons for user profile */}
-            <div className="usr-utilities">
-              {/* <button className="utility-button" title="Settings">
-                <i className="fas fa-cogs utility-icon"></i>
-              </button> */}
-              <button className="utility-button" title="Account">
-                <i className="fas fa-user utility-icon"></i>
-              </button>
-              <button className="utility-button" title="Support">
-                <i className="fas fa-life-ring utility-icon"></i>
-              </button>
-              {/* <button className="utility-button" title="Travel Maps">
-                <i className="fas fa-map-marked-alt utility-icon"></i>
-              </button> */}
-              {/* <button className="utility-button" title="Visa Info">
-                <i className="fas fa-passport utility-icon"></i>
-              </button> */}
-              <button className="utility-button" title="Accomodation">
-                <i className="fas fa-hotel utility-icon"></i>
-              </button>
-              {/* <button className="utility-button" title="Car Rentals">
-                <i className="fas fa-car utility-icon"></i>
-              </button> */}
-              {/* <button className="utility-button" title="Local Guides">
-                <i className="fas fa-globe-africa utility-icon"></i>
-              </button> */}
-            </div>
-            
-            
-            <UserTourCarousel highlights={highlightsArray} />  {/* main carousel wrapper */}
 
-            <div className="recommendation-card">
-              <img
-                src="/media/images/mountain.jpeg" // Use same image from hero
-                alt="Lion Safari"
-                className="recommendation-image"
-              />
-              <div className="recommendation-text">
-                <h3>Dream Safari in Masai Mara</h3>
-                <p>Explore the wild beauty of Kenya's most iconic reserve.</p>
-                <Link to="/packages"><button className="recommend-btn">View Package</button></Link>
-              </div>
-              
-            </div>
-          </div> )}
+  ) : (
+    <div className="recommendation-section">
+      {/* UTILITY BUTTONS */}
+      <div className="usr-utilities">
+        <button className="utility-button" title="Edit Profile">
+          <i className="fas fa-user utility-icon"></i>
+        </button>
+        <button className="utility-button" title="Contact Support">
+          <i className="fas fa-life-ring utility-icon"></i>
+        </button>
+        <button
+          className="utility-button"
+          title="Make Review"
+           onClick={() => {
+            setShowModal(true);
+            window.location.hash = "review"; // ensures URL updates
+          }}
+        >
+          <i className="fas fa-star utility-icon"></i>
+        </button>
+      </div>
 
-          
-        </section>
+      <UserTourCarousel highlights={highlightsArray} />
 
-        <section className="activity-section"  >
-          <h2>Recent Activity</h2>
-          <UserActivityTimeline  activities={activitiesArray}/>
-          
-        </section>
-        
+      {/* STATIC RECOMMENDATION */}
+      <div className="recommendation-card">
+        <img
+          src="/media/images/mountain.jpeg"
+          alt="Lion Safari"
+          className="recommendation-image"
+        />
+        <div className="recommendation-text">
+          <h3>Dream Safari in Masai Mara</h3>
+          <p>Explore the wild beauty of Kenya's most iconic reserve.</p>
+          <Link to="/packages">
+            <button className="recommend-btn">View Package</button>
+          </Link> 
         </div>
-       
+      </div>
+    </div>
+  )}
+</section>
 
+
+          {/* ===================== ACTIVITY SECTION ===================== */}
+          <section className="activity-section">
+            <h2>Recent Activity</h2>
+            <UserActivityTimeline activities={activitiesArray} />
+          </section>
+        </div>
       </main>
     </div>
   );
