@@ -86,13 +86,6 @@ def statusCallback():
     return jsonify({"message": "payment initiated awaiting status update."}), 200
 
 
-# reviews route handler
-# @app.route('/api/reviews', methods=['GET'])
-# def get_reviews():
-#     reviews = []
-#     for review in db["reviews"].find({}, {"_id": 0}):
-#         reviews.append(review)
-#     return jsonify(reviews)
 
 #  newsletter route handler 
 @app.route("/api/newsletter/subscribe", methods=["POST"])
@@ -112,8 +105,15 @@ def subscribe_newsletter():
     if subscribers.find_one({"email": email}):
         return jsonify({"error": "Email already subscribed"}), 409
 
-    subscribers.insert_one({"email": email})
-    return jsonify({"message": "Subscribed successfully"}), 200
+    try:
+        subscribers.insert_one({
+            "email": email,
+            "created_at": datetime.utcnow()
+        })
+        return jsonify({"message": "Subscribed successfully"}), 200
+    except Exception as e:
+        print(f"[SUBSCRIBE] Error inserting subscriber: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 
