@@ -47,7 +47,13 @@ const UserSidebar = ({ userData }) => {
   return (
     <aside className="user-sidebar">
       <div className="profile-box">
-        <img src={userData.avatar || "media/images/mountain.jpeg"} alt="User" className="profile-pic" />
+<img 
+  src={
+    `${baseURL}/${userData.avatar || "media/images/mountain.jpeg"}`
+  }
+  alt="User"
+  className="profile-pic"
+/>
         <h3 className="user-name">{userData.name}</h3>
         <p className="user-role">{userData.role}</p>
       </div>

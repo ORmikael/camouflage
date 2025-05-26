@@ -1,4 +1,8 @@
-import React,{useEffect} from 'react';
+// ===============================
+// USER TOUR CAROUSEL COMPONENT
+// ===============================
+
+import React from 'react';
 import '../../assets/css/userprofile/usertourcarousel.css';
 
 const UserTourCarousel = ({ highlights = [] }) => {
