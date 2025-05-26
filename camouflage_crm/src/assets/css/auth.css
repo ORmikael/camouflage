@@ -16,7 +16,7 @@
 }
 
 /* IMPROVED FORM CARD */
-form {
+.auth-form {
   background-color: rgba(108, 101, 78, 0.75); /* semi-translucent light olive brown */
   padding: 2.5rem 2rem;
   border-radius: 1rem;
@@ -30,7 +30,7 @@ form {
 }
 
 /* INPUT FIELDS */
-input {
+.auth-form input {
   padding: 0.9rem 1rem;
   font-size: 1rem;
   border-radius: 0.5rem;
@@ -42,18 +42,17 @@ input {
   transition: all 0.3s ease;
 }
 
-input::placeholder {
+.auth-form input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
-
-input:focus {
+.auth-form input:focus {
   border-color: #d4a200;
   outline: none;
   background-color: rgba(255, 255, 255, 0.25);
 }
 
-/* SUBMIT BUTTON */
-button[type="submit"] {
+/* SUBMIT BUTTON */ 
+.auth-form button[type="submit"] {
   padding: 1rem;
   font-size: 1rem;
   background-color: var(--accent-yellow, #f4c430);
@@ -66,7 +65,7 @@ button[type="submit"] {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-button[type="submit"]:hover {
+.auth-form button[type="submit"]:hover {
   background-color: #e1b900;
 }
 

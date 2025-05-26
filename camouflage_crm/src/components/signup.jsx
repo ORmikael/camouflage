@@ -31,7 +31,7 @@ export default function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSignup}>
+    <form onSubmit={handleSignup} className="auth-form">
       <input name="name" placeholder="Name" onChange={handleChange} />
       <input name="email" placeholder="Email" onChange={handleChange} />
       <input type="password" name="password" placeholder="Password" onChange={handleChange} />
