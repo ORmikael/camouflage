@@ -11,14 +11,14 @@
 }
 
 /* Optional: Scrollbar styling for WebKit browsers */
-.activity-timeline::-webkit-scrollbar {
+.usr-activity-timeline::-webkit-scrollbar {
   width: 6px;
 }
-.activity-timeline::-webkit-scrollbar-thumb {
+.usr-activity-timeline::-webkit-scrollbar-thumb {
   background-color: var(--accent-yellow);
   border-radius: 3px;
 }
-.activity-timeline::-webkit-scrollbar-track {
+.usr-activity-timeline::-webkit-scrollbar-track {
   background: transparent;
 }
 
