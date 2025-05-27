@@ -59,7 +59,7 @@ const HeroSection = ({
 // handle livechat using whatsApp
 const openWhatsApp = () => {
   const phoneNumber = '254737721239'; // replace with your number
-  const message = 'Hi Camouflage Tours! I have a question.';
+  const message = '';
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
 };
