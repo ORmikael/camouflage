@@ -146,36 +146,26 @@ useEffect(() => {
   }
 }, [status]);
 
-// Auto-dismiss feedback after delay clear selected package from booking doc and ridirect to payment page 
+
+
+
+// Auto-dismiss feedback after delay
 useEffect(() => {
   if (status.success || status.error) {
     const timer = setTimeout(() => {
       setStatus({ success: '', error: '' });
     }, 5000);
 
+    // Clear selected package
     setSelectedPackage(null);
-
-    // Trigger redirect to payment gateway if status.success includes redirect info
-    try {
-      if (redirect_url) {
-        console.log("Redirecting to payment gateway:", redirect_url);
-        window.location.href = redirect_url;
-      }
-    } catch (err) {
-      console.log(redirect_url);
-      
-      console.warn("No valid redirect_url found in success message.");
-    }
 
     return () => clearTimeout(timer);
   }
 }, [status]);
 
 
-
-
   return (
-    <>
+    <div className='packages-booking-wrapper'>
       <section ref={packagesSectionRef} id="packages-section">
         {/* Packages listing component or content goes here */}
       </section>
@@ -249,7 +239,23 @@ useEffect(() => {
           <button type="submit">Confirm Booking</button>
         </form>
       </section>
-    </>
+     {redirect_url && (
+  <div className="iframe-container">
+    <iframe
+      title="Payment Gateway"
+      src={redirect_url}
+      style={{
+        width: '100%',
+        height: '600px',
+        border: 'none',
+        marginTop: '2rem',
+      }}
+      allowFullScreen
+    ></iframe>
+  </div>
+)}
+
+    </div>
   );
 };
 
