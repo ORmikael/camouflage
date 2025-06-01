@@ -164,7 +164,7 @@ const Header = () => {
   
         {/* Hamburger */}
         <div className="humbuger__menu">
-          <button onClick={toggleMenu}>☰</button>
+          <button id="navToggle" onClick={toggleMenu}>☰</button>
         </div>
   
       </div>

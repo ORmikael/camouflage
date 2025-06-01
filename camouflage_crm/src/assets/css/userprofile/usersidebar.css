@@ -93,3 +93,109 @@
   color: var(--off-white);
   opacity: 0.8;
 }
+
+/* ===========================
+   RESPONSIVE STYLES (MOBILE)
+   =========================== */
+@media (max-width: 768px) {
+  .user-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border-radius: 0;
+    background-color: var(--jungle-green, #f9f9f9); /* optional background */
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+        margin: 0;
+        gap: 0;
+
+  }
+
+  /* ===========================
+     PROFILE BOX & AVATAR
+     =========================== */
+  .profile-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .profile-pic {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-name {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .user-role {
+    font-size: 0.85rem;
+    color: var(--white);
+  }
+
+  /* ===========================
+     NAVIGATION LINKS / BUTTONS
+     =========================== */
+  .sidebar-nav {
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* gap: 0.75rem; */
+    margin-top: 1rem;
+  }
+
+  .sidebar-nav a,
+  .sidebar-nav button {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.35rem;
+    /* min-width: 40%; */
+    text-align: center;
+    border: 1px solid var(--accent-color, #ccc);
+    border-radius: 0.5rem;
+    /* background-color: #fff; */
+    color: var(--white);
+    transition: background 0.2s ease;
+  }
+
+  .sidebar-nav a:hover,
+  .sidebar-nav button:hover {
+    background-color: var(--accent-color, #f0f0f0);
+  }
+
+  /* ===========================
+     USER STATS
+     =========================== */
+  .user-stats {
+    display: flex;
+    justify-content: space-evenly;
+    /* margin-top: 1.5rem; */
+    width: 100%;
+  }
+
+  .user-stats div {
+    min-width: 4rem;
+  }
+
+  .stat-number {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    color: var(--white);
+  }
+}

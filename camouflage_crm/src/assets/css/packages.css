@@ -395,8 +395,124 @@ font-weight: bold;
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .hero-tags .tag {
-    font-size: 0.8rem;
-    padding: 6px 12px;
+  /* PACKAGES CAROUSEL SECTION */
+  .packages-carousel-section {
+    padding: 3rem 1rem 2rem; /* Reduced vertical padding for tighter layout */
+  }
+
+  /* Carousel wrapper tweaks */
+  .carousel-wrapper {
+    padding: 1rem 0.75rem; /* Slightly more horizontal padding */
+    gap: 0.75rem;  
+    margin-top: 4em /* Moderate gap between cards */
+  }
+
+  /* Carousel track */
+ .carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding: 1rem;
+  padding: 1rem 0;   /* vertical padding only */
+  gap: 1rem;
+}
+
+  /* Carousel cards */
+  .carousel-card {
+    flex: 0 0 85%;          /* Wider cards for better visibility */
+    max-width: 75%;
+    margin: 0 0.5rem;
+    width: auto;            /* Responsive width */
+    border-radius: 12px;    /* Slightly larger radius for touch */
+    margin:0 2rem;
+    scroll-snap-align: start;
+    scroll-margin: 2rem;
+    position: relative;
+  }
+
+  /* Card image */
+  .card-image {
+    height: 200px;          /* Balanced image height */
+  }
+
+  /* Text sizing adjustments */
+  .card-info h2 {
+    font-size: 1.2rem;      /* Slightly smaller for mobile */
+  }
+ .card-info {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* CENTER ON BOTH AXES */
+}
+
+  .card-info .description,
+  .card-info .price {
+    font-size: 0.9rem;      /* Readable but compact */
+  }
+
+  /* Buttons */
+  .card-details-btn,
+  .booking-btn {
+    padding: 0.3rem 0.6rem; /* Larger tap area */
+    font-size: 0.9rem;
+  }
+
+  /* Timeline adjustments for small screens */
+  .timeline-header {
+    padding: 1rem 2rem;
+  }
+
+  .timeline-title {
+    font-size: 1.5rem;
+  }
+
+  .tour-features-row {
+    padding: 1rem 2rem;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .feature-icon {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .tour-timeline {
+    padding: 2rem 2rem;
+  }
+
+  .timeline-entry {
+    flex-direction: column;   /* Stack timeline entries vertically */
+    gap: 1rem;
+  }
+
+  .timeline-left {
+    min-width: auto;
+    flex-direction: row;       /* Horizontal day label and line */
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .day-label {
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+  }
+
+  .timeline-line {
+    display: none;            /* Hide vertical line for compactness */
+  }
+
+  .timeline-right {
+    max-width: 100%;
+  }
+
+  .timeline-image {
+    width: 100%;
+    max-height: 150px;
+    border-radius: 8px;
+    margin-top: 0.5rem;
   }
 }
+

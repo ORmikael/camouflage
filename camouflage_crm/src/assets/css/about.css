@@ -361,3 +361,122 @@
     align-items: center;
   }
 }
+
+
+/* ========================= MOBILE VIEW ============================= */
+@media (max-width: 768px) {
+
+  /* ROOT PADDING ADJUSTMENT */
+ 
+
+  /* INTRO SECTION STACKING */
+  .about-intro {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .intro-left h2 {
+    font-size: 2rem;
+  }
+
+  .intro-left p {
+    font-size: 0.95rem;
+    margin-top: 1.2rem;
+  }
+
+  .bullet-points {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cta-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro-image {
+    max-width: 90%;
+    max-height: 250px;
+  }
+
+  /* MISSION/VISION/VALUE SECTION STACK */
+  .mission-vision-values-showcase {
+    padding: 2rem 1rem;
+  }
+
+  .content-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .left-column, .right-column {
+    flex: 1 1 100%;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-grid img {
+    height: 160px;
+  }
+
+  /* QUOTE BLOCK */
+  .quote-block blockquote {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  .quote-block footer {
+    font-size: 0.85rem;
+  }
+
+  /* CTA UNDER CORE VALUES */
+  .core-values-action {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .core-values-action h5 {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .core-values-action .cta-row {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  /* FOOTER SECTION */
+  .about-footer-cta {
+    padding: 2rem 1rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .reserve-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-footer-cta {
+  background-color: #2d2812 !important;
+  color: var(--white);
+  padding: 3rem 2rem;
+
+  /* ADD THESE TO CENTER ALL CHILDREN HORIZONTALLY */
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  align-items: center;    /* center horizontally */
+  justify-content: center; /* center vertically if container height specified */
+  text-align: center;     /* center inline content like text */
+}
+
+}

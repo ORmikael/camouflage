@@ -1,73 +1,106 @@
+/* ================================
+   REVIEW SECTION (BASE STYLES)
+================================ */
 .reviews {
   position: relative;
   height: 80vh;
   overflow: hidden;
-  /* border-radius: 12px; */
   z-index: 1;
-
-}.review-title{ 
-  position: absolute;
-  z-index: 5;
 }
 
+.review-title {
+  position: absolute;
+  z-index: 5;
+  top: 2rem;
+  left: 2rem;
+  font-size: 2rem;
+  color: var(--accent-yellow);
+}
 
-
-.review-bg { /* background image for reviews section*/
+.review-bg {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   top: 0;
   left: 0;
   z-index: 0;
-  /* border-radius: 12px; */
+  filter: brightness(0.5);
 }
 
 .review-overlay {
   position: relative;
-
-  /* z-index: 3; */
   display: flex;
-  justify-content: flex-end; /* keeps cards right-aligned */
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
   height: 100%;
-  gap: 1rem;
-  padding: 1rem 4rem; /* increase right padding */
-  
+  padding: 2rem 4rem;
+  gap: 1.5rem;
+  z-index: 3;
+  flex-wrap: nowrap;
 }
 
+.review-container {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: var(--off-white);
+  padding: var(--spacing-md);
+  border-radius: 12px;
+
+  display: flex;
+  flex-wrap: wrap;            /* ✅ ALLOWS WRAPPING */
+  gap: 1.5rem;
+  margin-top: 5rem;
+justify-content: space-around;
+  overflow: visible;          /* ✅ or omit entirely */
+}
+
+.review-list {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.review-list::-webkit-scrollbar {
+  display: none;
+}
 
 .review-card {
-  background-color: var(--dark-green);
-  box-sizing: border-box;
-  color: var(--off-white);
-  border-radius: 10px;
   border: 3px solid var(--accent-yellow);
-  padding: 1.75em 0.5em;
-  box-shadow: 0 2px 12px var(--shadow-high);
-              /* make it more rectangular (landscape) */
-  display: flex; 
-  flex-direction: column;           /* make content horizontal if needed */
+  border-radius: 12px;
+  padding: 1.75em 1em;
+  margin-bottom: 2.5rem;
+  color: var(--off-white);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-  animation: fadeInUp 0.6s ease forwards;
+  gap: 0.75rem;
+  box-shadow: 0 4px 14px var(--shadow-high);
+  min-width: 280px;
+  max-width: 320px;
   position: relative;
-  margin-bottom: 3rem;
+  animation: fadeInUp 0.6s ease forwards;
+  transform: translateY(20px) scale(0.98);
+  opacity: 0;
 }
-
 
 .review-card .avatar {
   width: 50px;
   height: 50px;
-  flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
   top: -25px;
+  left: calc(50% - 25px);
 }
 
+.review-content {
+  font-size: 0.85rem;
+  text-align: center;
+}
+.review-content > * {
+  margin: 0.3em 0;
+}
 
 .review-rating .filled-star {
   color: gold;
@@ -76,6 +109,9 @@
   color: #999;
 }
 
+/* ================================
+   ANIMATIONS
+================================ */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -88,17 +124,66 @@
     filter: blur(0);
   }
 }
-.review-content {
-  /* overflow: hidden; */
-  /* flex: 1; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* gap: 0.25rem; */
-  /* width: 55%; */
-  font-size: 0.8em; /* smaller text */
+
+/* ================================
+   RESPONSIVE – TABLET (<=1024px)
+================================ */
+@media (max-width: 1024px) {
+  .reviews {
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .review-overlay {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .review-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .review-card {
+    max-width: 90%;
+  }
+
+  .review-title {
+    font-size: 1.75rem;
+    top: 1rem;
+    left: 1rem;
+  }
 }
 
-.review-content > * {
-  margin: 0.3em !important;
+/* ================================
+   RESPONSIVE – MOBILE (<=480px)
+================================ */
+@media (max-width: 480px) {
+  .review-title {
+    font-size: 1.5rem;
+    left: 1rem;
+    top: 0.75rem;
+  }
+
+  .review-overlay {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .review-card {
+    padding: 1.25em 0.75em;
+    font-size: 0.8rem;
+    max-width: 100%;
+  }
+
+  .review-content {
+    font-size: 0.75rem;
+  }
+
+  .review-container {
+    padding: var(--spacing-sm);
+    flex-direction: column;
+    margin-top: 3rem;
+  }
 }

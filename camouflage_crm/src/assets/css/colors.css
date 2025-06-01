@@ -1,67 +1,67 @@
-/* colors.css | Camouflage Tours & Travel Brand Color System */
+/* =========================================================
+              Camotrails Brand Color System  
+============================================================ */
 
-/* ------------------ Dark Theme Colors (default) --------------------------- */
 :root {
-  /* === Base Neutrals === */
-  --white: #ffffff;
-  --off-white: #e7e0d0;
-  --black: #0f0d08;
-
-  /* === Brand Core Colors === */
-  --dark-olive-brown: #2d2812;
-  --accent-tan: #a87b47;
-  --accent-red: #f02c22dc;
-  --accent-yellow: #e2a845;
-  /* --light-olive-brown: #2b2413; */
-  --link-sunset-orange: #ff7847; /* High contrast, complements both forest and yellow */
-  --light-olive-brown: #6c654e;
-
-  /* === Animal-Inspired Darks === */
-  --deep-brown: #1a140d;
-  --black-paw: #0f0d08;
-
-  /* === Website Greens === */
-  --jungle-green: #365e3e;
-  --lightjungle-green: #2d5c4e;
-  --forest-green: #03140f;
-
-  /* === CTA & Accent Colors === */
-  --violet-cta: #4c3fdc;
-  --violet-hover: #2f28b6;
-
-  /* === Shadows & Elevation === */
-  --shadow-low: rgba(0, 0, 0, 0.1);
-  --shadow-med: rgba(0, 0, 0, 0.2);
-
-  /* === Text Defaults === */
-  --text-on-dark: #ffffff;
-  --text-on-light: #2d2812;
-
-  /* === Accessibility Friendly Contrast Variants === */
-  --accessible-gold: #c68f3c;
-  --accessible-tan: #977145;
-
-  /* === Optional Transparency Variants === */
-  --overlay-dark: rgba(45, 40, 18, 0.85);
-
-  /* === Spacing System === */
+  /* ---------- SIZING / SPACING SYSTEM ---------- */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
   --spacing-xl: 6rem;
 
-  /* ====== user profile color scheme ============= */
+  /* ---------- BASE NEUTRALS ---------- */
+  --white: #ffffff;
+  --off-white: #e7e0d0;
+  --black: #0f0d08;
+
+  /* ---------- TEXT COLORS ---------- */
+  --text-on-dark: #ffffff;
+  --text-on-light: #2d2812;
+
+  /* ---------- BRAND CORE COLORS ---------- */
+  --dark-olive-brown: #2d2812;
+  --accent-tan: #a87b47;
+  --accent-yellow: #e2a845;
+  --accent-red: #f02c22dc;
+  --light-olive-brown: #6c654e;
+  --link-sunset-orange: #ff7847;
+
+  /* ---------- EARTH / USER PROFILE COLORS ---------- */
   --earth-cream: #fefaf2;
   --earth-sand: #f5eedd;
-  --accent-yellow: #f1c40f;
   --accent-gold: #d4af37;
   --text-primary: #2e2e2e;
   --text-secondary: #777;
 
+  /* ---------- GREENS (WEBSITE THEME) ---------- */
+  --jungle-green: #365e3e;
+  --lightjungle-green: #2d5c4e;
+  --forest-green: #03140f;
+
+  /* ---------- ANIMAL-INSPIRED DARKS ---------- */
+  --deep-brown: #1a140d;
+  --black-paw: #0f0d08;
+
+  /* ---------- CTA & HIGHLIGHT COLORS ---------- */
+  --violet-cta: #4c3fdc;
+  --violet-hover: #2f28b6;
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-low: rgba(0, 0, 0, 0.1);
+  --shadow-med: rgba(0, 0, 0, 0.2);
+
+  /* ---------- ACCESSIBILITY CONTRAST VARIANTS ---------- */
+  --accessible-gold: #c68f3c;
+  --accessible-tan: #977145;
+
+  /* ---------- TRANSPARENT OVERLAYS ---------- */
+  --overlay-dark: rgba(45, 40, 18, 0.85);
 }
 
-/* ------------------ Light Theme Colors --------------------------- */
+/* ============================================
+   Light Theme Overrides
+============================================ */
 [data-theme='light'] {
   --white: #ffffff;
   --off-white: #f5f5f5;
@@ -91,16 +91,9 @@
 
   --overlay-light: rgba(255, 255, 255, 0.85);
 
-
-
-  /* Example color tokens */
---surface-earth: #303d2f;           /* a deep earthy green */
---surface-tan: #3f3a2f;             /* muted olive-brown */
---card-brown-overlay: #433f32;      /* subtle dark brown */
---text-on-earth: #f3f1e7;           /* soft readable white */
-
+  /* ---- SURFACE / CARD TOKENS ---- */
+  --surface-earth: #303d2f;
+  --surface-tan: #3f3a2f;
+  --card-brown-overlay: #433f32;
+  --text-on-earth: #f3f1e7;
 }
-
-
-
-

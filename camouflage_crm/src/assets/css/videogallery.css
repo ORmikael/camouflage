@@ -1,9 +1,15 @@
+/* ===============================
+   VIDEO GRID LAYOUT
+   =============================== */
+
 .video-grid {
   position: relative;
-  height: 100%; /* Adjust as per your needs */
- 
- 
+  height: 100%;
 }
+
+/* ===============================
+   VIDEO SLOTS
+   =============================== */
 
 .video-slot {
   position: absolute;
@@ -11,41 +17,122 @@
   height: 20%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: 1;
-  transform-origin: center center; /* default */}
+  transform-origin: center center;
+  overflow: hidden;
+  border-radius: 8px;
+}
 
-  .video-slot:hover {
-    transform: translateY(-10%) scale(1.1);
-    z-index: 10;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
+.video-slot:hover {
+  transform: translateY(-10%) scale(1.1);
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
 
-.video-1  { bottom: 5%;    left: 0%;    }
-.video-2  { bottom: 5%;    left: 25%;   }
-.video-3  { bottom: 5%;    left: 50%;   }
-.video-4  { bottom: 5%;    left: 75%;   }
-.video-5  { bottom: 30%;  left: 25%; }
-.video-6  { bottom: 30%;  left: 50%; }
-.video-7  { bottom: 30%;  left: 75%; }
-.video-8  { bottom: 55%;  left: 75%; }
-/* .video-9  { bottom: 35%;  left: 75%; transform: translateY(-50%); }
-.video-10 { bottom: 60%;  left: 75%; transform: translateY(-50%); } */
+/* DESKTOP POSITIONS (unalterable) */
+.video-1  { bottom: 5%;   left: 3%;   }
+.video-2  { bottom: 5%;   left: 28%;  }
+.video-3  { bottom: 5%;   left: 53%;  }
+.video-4  { bottom: 5%;   left: 78%;  }
+.video-5  { bottom: 30%;  left: 3%;   }
+.video-6  { bottom: 30%;  left: 28%;  }
+.video-7  { bottom: 30%;  left: 53%;  }
+.video-8  { bottom: 30%;  left: 78%;  }
 
-
+/* VIDEO STYLING */
 .video-slot video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
+
+/* ===============================
+   CUSTOM VIDEO CONTROLS INSIDE SLOT
+   =============================== */
+
+.custom-controls {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  /* background: rgba(0, 0, 0, 0.6); */
+  /* padding: 0.5em 1em; */
+  border-radius: 0.5em;
+  z-index: 2;
+
+  /* SCALE CHILDREN WHEN RESIZED */
+  font-size: clamp(0.7rem, 1vw, 1rem); /* base unit */
+  /* gap: 0.5em; */
+}
+
+.custom-controls * {
+  font-size: inherit;
+  flex-shrink: 1;
+  max-width: 100%;
+}
+
+/* BUTTONS */
+.custom-controls button {
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  padding: 0.1em;
+  transition: color 0.2s ease;
+  flex: 0 0 auto;
+}
+
+.custom-controls button:hover {
+  color: var(--accent-yellow);
+}
+
+/* PROGRESS SLIDER */
+.custom-controls input[type="range"] {
+  /* flex: 1 1 auto; */
+  margin: 0 0.1em;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  height: 0.25em;
+  border-radius: 0.125em;
+  max-width: 50%;
+}
+
+/* Chrome/Safari Thumb */
+.custom-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  cursor: pointer;
+}
+
+/* Firefox Thumb */
+.custom-controls input[type="range"]::-moz-range-thumb {
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  cursor: pointer;
+}
+
+
+/* ===============================
+   WATCH LABEL + BUTTON (Floating)
+   =============================== */
+
 .watch-container {
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 0.75rem; /* space between button and text */
+  gap: 0.75rem;
   position: absolute;
   top: 5em;
-  /* left: 5em; */
-
 }
 
 .watch-button {
@@ -59,7 +146,6 @@
   height: 50px;
   border-radius: 50%;
   background: transparent;
-  margin-bottom: var(--spacing-lg);
   cursor: pointer;
   padding: 0;
 }
@@ -67,5 +153,68 @@
 .watch-label {
   color: var(--white);
   font-size: 1rem;
-  margin-bottom: var(--spacing-lg);
+}
+
+/* ===============================
+   RESPONSIVE ADJUSTMENTS
+   =============================== */
+
+@media (max-width: 1024px) {
+  .video-slot {
+    width: 28%;
+    height: 18%;
+  }
+
+  .custom-controls {
+    padding: 0.25rem 0.4rem;
+  }
+
+  .control-button {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .video-slot {
+    /* width: 45%; */
+    height: 20%;
+  }
+
+  
+
+.video-1 { bottom: 5%;   left: 3%;   }   /* Column 1 */
+.video-2 { bottom: 5%;   left: 35%;  }   /* Column 2 */
+.video-3 { bottom: 5%;   left: 67%;  }   /* Column 3 */
+
+.video-4 { bottom: 35%;  left: 3%;   }
+.video-5 { bottom: 35%;  left: 35%;  }
+.video-6 { bottom: 35%;  left: 67%;  }
+
+.video-7 { bottom: 65%;  left: 3%;   }
+.video-8 { bottom: 65%;  left: 35%;  }
+/* you can add a .video-9 here if needed for the third cell of row 3:
+   .video-9 { bottom: 65%; left: 67%; } */
+
+
+  .custom-controls {
+    width: 95%;
+    bottom: 4%;
+    padding: 0.2rem;
+  }
+
+  .control-button {
+    font-size: 0.8rem;
+  }
+
+
+  .watch-container {
+    font-size: 0.85rem;
+      top:0;
+  left: 25%;
+    /* padding: 0.75em 1em; */
+    /* margin-bottom: 1rem; */
+    /* border: 1px solid var(--accent-yellow); */
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+  }
 }

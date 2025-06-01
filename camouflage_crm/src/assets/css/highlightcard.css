@@ -108,3 +108,11 @@
   z-index: 0;
 }
 
+
+@media (max-width:480px) {
+  
+  
+  .highlight-flip-container{
+    padding: 1rem 0.5rem;
+  }
+}

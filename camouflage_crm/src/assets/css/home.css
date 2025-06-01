@@ -1,19 +1,23 @@
+/* ================================
+   FONT IMPORT
+================================ */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
-/* General Layout */
+/* ================================
+   BASE LAYOUT
+================================ */
 .home-wrapper {
-  /* padding-top: var(--spacing-lg); */
   display: flex;
   flex-direction: column;
-  /* gap: var(--spacing-md); */
   font-family: 'Nunito', sans-serif;
 }
 
-/* Hero Section */
+/* ================================
+   HERO SECTION
+================================ */
 .hero-section {
   background-color: transparent;
   color: var(--text-on-dark);
-  /* border-radius: 12px; */
   padding: var(--spacing-md) var(--spacing-sm);
   text-align: center;
   box-shadow: 0 4px 12px var(--shadow-low);
@@ -53,136 +57,18 @@
 }
 
 .hero-section h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }
 
 .hero-section p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
 
-
-
-/* video gallery section */
-.videos-section {
-  background-color: var(--forest-green);
-  color: var(--white);
-  /* padding: var(--spacing-lg) var(--spacing-md); */
-  box-shadow: 0 8px 2px var(--shadow-low);
-  position: relative;
-  height: 80vh;
-
-
-}
-.videos-section-header{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  padding: 3em;
-  max-width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  z-index: 5;
-
-}
-
-.video-gallery-layout{
-  width: 60%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 5;
-  
-}
-.videos-section h3 {
-  /* text-align: center; */
-  font-size: 2rem;
-  
-  margin-bottom: var(--spacing-md);
-}
-
-
-.videogallery { /* background image for reviews section*/
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  /* border-radius: 12px; */
-}
-
-
-
-
-/* Reviews Section */
-.reviews {
-  background-color: var(--forest-green);
-  /* border-radius: 12px; */
-  padding: var(--spacing-sm);
-  color: var(--white);
-  box-shadow: 0 4px 12px var(--shadow-low);
-  height: 70vh;
-}
-
-
-
-.details-view {
-  display: grid;
-  grid-template-columns: 1fr;
-  /* gap: var(--spacing-sm);
-  padding: var(--spacing-sm) 0; */
-}
-
-/* Calendar & Map */
-.calendar,
-.map {
-  background-color: var(--forest-green);
-  color: var(--text-on-dark);
-  padding: 0.2rem;
-  /* border-radius: 10px; */
-  min-height: 400px;
-  box-shadow: 0 4px 12px var(--shadow-low);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#map-section,
-#calendar-section {
-  /* scroll-margin-top: 4.5rem; */
-}
-
-.focus-effect {
-  animation: focusShrink 0.6s ease-in-out;
-  border-width: 3px;
-}
-
-@keyframes focusShrink {
-  0% {
-    transform: scale(1);
-    background-color: transparent;
-    border-color: var(--golden-yellow);
-  }
-  50% {
-    transform: scale(0.90);
-    background-color: var(--jungle-green);
-    border: 3px solid;
-    border-color: var(--golden-yellow);
-  }
-  100% {
-    transform: scale(1);
-    background-color: transparent;
-    border-color: var(--golden-yellow);
-  }
-}
-
-/* Highlights Section */
+/* ================================
+   DESTINATION HIGHLIGHT SECTION
+================================ */
 .highlights {
   background-color: var(--forest-green);
   color: var(--white);
@@ -193,19 +79,207 @@
   flex-direction: column;
   align-items: center;
 }
+.highlight-flip-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 1200px;
+  margin-top: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+  background-color: var(--forest-green);
+  /* color: white; ✅ White text on dark background */
+}
+
+.highlight-card {
+  flex: 1 1 calc(25% - var(--spacing-md));
+  max-width: calc(25% - var(--spacing-md));
+  perspective: 1000px;
+  height: 320px;
+  position: relative;
+}
+
+
+.highlight-card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.highlight-card:hover .highlight-card-inner {
+  transform: rotateY(180deg);
+}
+
+.highlight-card-front,
+.highlight-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.highlight-card-front {
+  background: var(--accent-yellow);
+  color: var(--text-dark);
+}
+
+.highlight-card-back {
+  background: var(--jungle-green);
+  color: var(--text-light);
+  transform: rotateY(180deg);
+}
 
 
 
-/* Responsive Fix */
-@media (max-width: 768px) {
-  .details-view {
-    grid-template-columns: 1fr;
+
+/* ================================
+   VIDEO GALLERY SECTION
+================================ */
+.videos-section {
+  background-color: var(--forest-green);
+  color: var(--white);
+  box-shadow: 0 8px 2px var(--shadow-low);
+  position: relative;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.videos-section-header {
+  position: relative;
+  width: 100%;
+  max-width: 40%;
+  padding: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 5;
+}
+
+.videos-section-header h3 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.videos-section-header p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.video-gallery-layout {
+  width: 60%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+.videogallery {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* 
+.watch-container {
+  position: absolute;
+  top: 5rem;
+  left: 15%;
+  transform: translateX(-50%);
+  padding: 1em;
+  border-radius: 10px;
+  z-index: 10;
+} */
+
+/* ================================
+   RESPONSIVE QUERIES
+================================ */
+/* ---------- TABLET (≤1024px) ---------- */
+@media (max-width: 1024px) {
+  /* VIDEO GALLERY */
+  .videos-section {
+    flex-direction: column;
+    height: auto;
+    padding-bottom: var(--spacing-lg);
   }
 
-  .quick-actions {
-    flex-direction: column;
-    gap: var(--spacing-sm);
+  .videos-section-header {
+    max-width: 100%;
+    padding: 2.5em 1.5em;
+    text-align: center;
+    align-items: center;
+  }
+
+  .videos-section-header h3 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .videos-section-header p {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 90%;
+  }
+
+  .video-gallery-layout {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    margin-top: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+/* 
+  .watch-container {
+    position: static;
+    transform: none;
+    margin: 1rem auto 0;
+    font-size: 0.95rem;
+    text-align: center;
+  } */
+
+  .highlight-card {
+    flex: 1 1 calc(33.333% - var(--spacing-md));
+    max-width: calc(33.333% - var(--spacing-md));
   }
 }
 
- 
+/* ---------- MOBILE (≤480px) ---------- */
+@media (max-width: 480px) {
+  /* VIDEO GALLERY */
+  .videos-section-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .videos-section-header p {
+    font-size: 0.95rem;
+    padding: 0 1em;
+  }
+
+  .video-gallery-layout {
+    height: 45vh;
+    margin-top: 1rem;
+  }
+
+  
+
+  .highlight-card {
+    flex: 1 1 calc(100% - var(--spacing-md));
+    max-width: calc(100% - var(--spacing-md));
+  }
+}

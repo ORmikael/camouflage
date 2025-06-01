@@ -16,6 +16,9 @@ import "../assets/css/auth.css";
         ? <>Don’t have an account? <Link to="/signup">Sign up</Link></>
         : <>Already registered? <Link to="/login">Log in</Link></>}
     </p>
+<p>
+    <Link to="/">Back Home</Link>
+</p>
 
     </div>
   );

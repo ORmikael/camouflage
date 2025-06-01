@@ -49,8 +49,9 @@ if (!Array.isArray(reviews) || reviews.length === 0) {
         alt="Background"
         className="review-bg"
       />
-      <div className="review-overlay">
-        {reviews.slice(current, current + 2).map((review, idx) => (
+      <div className="review-container">
+        {/* <div className="review-overlay"></div> */}
+        {reviews.slice(current, current + 5).map((review, idx) => (
           <article className="review-card animate" key={idx}>
 
             <img
