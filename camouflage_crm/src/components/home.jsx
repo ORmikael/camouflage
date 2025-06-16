@@ -31,8 +31,8 @@ function Home() {
     '/media/videos/packageshero.mp4',
   ]}
   isVideoMode={false}
-  title="Twende Safari"
-  subtitle="Explore the World with Us."
+  title="Mystiques of the Savannah"
+  subtitle="Explore the East Africa with Us."
   buttons={[
     { text: 'Join Newsletter', id: 'newslette-btnr' },
     { text: 'Book Today', id: 'booking-btn' }

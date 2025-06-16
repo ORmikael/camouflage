@@ -175,23 +175,23 @@
 }
 
 @media (max-width: 600px) {
-  .video-slot {
+  .custom-video-wrapper video {
     /* width: 45%; */
-    height: 20%;
+    min-height: 20%;
   }
 
   
 
-.video-1 { bottom: 5%;   left: 3%;   }   /* Column 1 */
-.video-2 { bottom: 5%;   left: 35%;  }   /* Column 2 */
-.video-3 { bottom: 5%;   left: 67%;  }   /* Column 3 */
+.video-1 { bottom: 0;   left: 3%;   }   /* Column 1 */
+.video-2 { bottom: 0;   left: 35%;  }   /* Column 2 */
+.video-3 { bottom: 0;   left: 67%;  }   /* Column 3 */
 
-.video-4 { bottom: 35%;  left: 3%;   }
-.video-5 { bottom: 35%;  left: 35%;  }
-.video-6 { bottom: 35%;  left: 67%;  }
+.video-4 { bottom: 30%;  left: 3%;   }
+.video-5 { bottom: 30%;  left: 35%;  }
+.video-6 { bottom: 30%;  left: 67%;  }
 
-.video-7 { bottom: 65%;  left: 3%;   }
-.video-8 { bottom: 65%;  left: 35%;  }
+.video-7 { bottom: 60%;  left: 3%;   }
+.video-8 { bottom: 60%;  left: 35%;  }
 /* you can add a .video-9 here if needed for the third cell of row 3:
    .video-9 { bottom: 65%; left: 67%; } */
 
@@ -200,6 +200,7 @@
     width: 95%;
     bottom: 4%;
     padding: 0.2rem;
+    margin: 0.75em 0;
   }
 
   .control-button {

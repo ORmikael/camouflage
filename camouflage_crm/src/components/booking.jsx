@@ -7,7 +7,7 @@ const BookingForm = ({ selectedPackage, setSelectedPackage}) => {
     name: '',
     email: '',
     phone: '',
-    travelers: 1,
+    travelers: "",
     date: '',
     notes: '',
   });
@@ -187,6 +187,7 @@ useEffect(() => {
       </div>
       <hr style={{ margin: '1rem 0px', }} />
       <div className="form-row">
+
           <input
             name="name"
             value={formData.name}
@@ -213,7 +214,9 @@ useEffect(() => {
           <input
             name="travelers"
             type="number"
-            value={formData.travelers}
+            // value={formData.travelers || ""}
+              value={ formData.travelers }
+
             onChange={handleChange}
             placeholder="No.Travelers" 
 

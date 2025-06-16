@@ -45,20 +45,11 @@ const HeroSection = ({
   };
   
 
-  // destination  hero btn 
-  // {buttons?.map((btn) => (
-  //   <button
-  //     key={btn.id}
-  //     id={btn.id}
-  //     onClick={() => handleButtonClick(btn.id)}
-  //   >
-  //     {btn.text}
-  //   </button>
-  // ))}
+
 
 // handle livechat using whatsApp
 const openWhatsApp = () => {
-  const phoneNumber = '254737721239'; // replace with your number
+  const phoneNumber = '254737721239';
   const message = '';
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
